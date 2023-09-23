@@ -3,8 +3,8 @@ self.addEventListener('install', (event) => {
         caches.open('my-cache').then((cache) => {
             return cache.addAll([
                 '/',
-                'templates/static/styles.css',
-                'templates/static/app.js',
+                '/templates/static/styles.css',
+                '/templates/static/app.js',
                 // Add other assets to cache
             ]);
         })
