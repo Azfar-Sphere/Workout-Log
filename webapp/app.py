@@ -16,7 +16,6 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
 Session(app)
-userId = session.get("user_id")
 
 #####################################################################
 # Sets PWA Config
@@ -50,7 +49,6 @@ def index():
     else:
         return redirect(url_for("login"))
     
-    error("Error")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
