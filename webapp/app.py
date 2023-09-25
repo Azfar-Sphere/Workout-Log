@@ -3,8 +3,6 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 
-from helpers import error
-
 app = Flask(__name__)
 
 # Connects to users table
@@ -109,3 +107,7 @@ def login():
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
+
+@app.route("/error")
+def error(message):
+    return render_template("error.html", error=message)    
