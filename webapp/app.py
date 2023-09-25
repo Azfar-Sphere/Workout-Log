@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, session, redirect
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+import threading 
 
 app = Flask(__name__)
 
@@ -52,9 +53,9 @@ def index():
 def register():
     if request.method == "POST":
         # Gets Password
-        username = request.form["username"]
-        password = request.form["password"]
-        conpassword = request.form["conpassword"]
+        username = request.form.get("username")
+        password = request.form.get("password")
+        conpassword = request.form.get("conpassword")
 
         # Gets Tuple of usernames from users databases
         usersCursor.execute("SELECT username FROM users ")
@@ -73,17 +74,19 @@ def register():
         # Adds user detail to users database
         passwordHash = generate_password_hash("password")
         usersCursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, passwordHash))
-        redirect(url_for("login"))
+        connUsers.commit()
+        return redirect(url_for("login"))
     
-    return render_template("register.html")
+    if request.method == "GET":
+        return render_template("register.html")
 
 # Defines Login Route
 @app.route("/login", methods=["GET", "POST"])
 def login():
     # Receives username and password
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get("username")
+        password = request.form.get("password")
 
         usersCursor.execute("SELECT username, hash FROM users WHERE username = ?", (username,))
         usernameRow = usersCursor.fetchone()
@@ -100,7 +103,8 @@ def login():
         return redirect(url_for("index"))
 
 # GET returns login page
-    return render_template("login.html")
+    if request.method == "GET":
+        return render_template("login.html")
 
 #Logsout
 @app.route("/logout")
