@@ -1,4 +1,4 @@
-def helperFunctions():
-    print("Helper Function")
+from flask import render_template
 
-helperFunctions()
+def error(messsage):
+    return render_template("error.html", error = message)    

@@ -1,7 +1,9 @@
-from flask import Flask, render_template, send_from_directory, session, redirect, request
+from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+
+from helpers import error
 
 app = Flask(__name__)
 
@@ -10,9 +12,11 @@ connUsers = sqlite3.connect("users.db")
 usersCursor = connUsers.cursor()
 
 # Configures Flask to use Server-Side Session Storage
-app.config["SESSION_TYPE"] ="filesystem"
+app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
+Session(app)
+userId = session.get("user_id")
 
 #####################################################################
 # Sets PWA Config
@@ -46,7 +50,35 @@ def index():
     else:
         return redirect("/login")
     
-    return redirect("/error")
+    error("Error")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        # Gets Password
+        username = request.form["username"]
+        password = request.form["password"]
+        conpassword = request.form["conpassword"]
+
+        # Gets Tuple of usernames from users databases
+        usersCursor.execute("SELECT username FROM users ")
+        usernameRow = usersCursor.fetchall()
+
+        # Checks valid username and password
+        if not username or not password:
+            error("Please Enter Username and Password")
+
+        if username in usernameRow:
+            error("Username Taken")
+
+        if password != conpassword:
+            error("Password do not match!")    
+
+        # Adds user detail to users database
+        passwordHash = generate_password_hash("password")
+        usersCursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, passwordHash))
+    
+    return render_template("register.html")
 
 # Defines Login Route
 @app.route("/login", methods=["GET", "POST"])
@@ -56,20 +88,25 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
+        usersCursor.execute("SELECT username, hash FROM users WHERE username = ?", (username,))
+        usernameRow = usersCursor.fetchone()
+
+        # Checks validity of login details
+        if not usernameRow:
+            error("Invalid username")
+
+        if not check_password_hash(usernameRow[1], "password"):
+            error("Incorrect Password")
+
         # If Login successful
         session["username"] = username
-        return redirect("/")
+        return redirect(url_for("index"))
 
-# Default case returns login page
+# GET returns login page
     return render_template("login.html")
 
 #Logsout
 @app.route("/logout")
 def logout():
     session.pop("username", None)
-    return redirect("/login")
-
-#Error Route
-@app.route("/error")
-def error():
-    return "Error"
+    return redirect(url_for("login"))

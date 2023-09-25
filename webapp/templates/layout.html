@@ -3,11 +3,13 @@
 <head>
     <!-- manifest link -->
     <link rel="manifest" href="/manifest.json">
-    <title>Test PWA</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
     <!-- app content -->
-    <h1> Hello World!</h1>
+    <main>
+    {% block main %}{% endblock %}
+    </main>
     <!-- service worker registration script -->
     <script>
         if ('serviceWorker' in navigator) {
