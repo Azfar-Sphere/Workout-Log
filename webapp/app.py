@@ -48,7 +48,7 @@ def index():
     if "username" in session:
         return render_template("index.html")
     else:
-        return redirect("/login")
+        return redirect(url_for("login"))
     
     error("Error")
 
@@ -77,6 +77,7 @@ def register():
         # Adds user detail to users database
         passwordHash = generate_password_hash("password")
         usersCursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, passwordHash))
+        redirect(url_for("login"))
     
     return render_template("register.html")
 
