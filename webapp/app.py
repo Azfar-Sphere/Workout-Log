@@ -13,9 +13,11 @@ DB_NAME = "users.db"
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
+Session(app)
 # Configures Database
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
-Session(app)
+usersDb.init_app(app)
+
 
 # Sets PWA Config (Service-worker and manifest file)
 #####################################################################
@@ -41,7 +43,7 @@ def app_js():
 @app.route("/templates/static/icon.png")
 def icon():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "icon.png")
-# Renders offline.html if there is no internet
+# Renders offline.html if there is no internet for service-worker
 @app.route("/offline.html")
 def offline():
     return render_template("offline.html")
