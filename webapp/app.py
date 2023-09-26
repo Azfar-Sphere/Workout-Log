@@ -1,8 +1,7 @@
-from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for
+from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, abort
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-import threading 
 
 app = Flask(__name__)
 
