@@ -4,9 +4,13 @@ from flask_session import Session
 from flask_login import LoginManager, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
+from pwa_routes import pwa_bp
 
 app = Flask(__name__)
 app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
+
+# Registers Blueprints
+app.register_blueprint(pwa_bp)
 
 # Connects to users table
 usersDb = SQLAlchemy()
@@ -29,35 +33,6 @@ usersDb.init_app(app)
 # def load_user(user_id):
 #     return User.get(user_id)
 
-# Sets PWA Config (Service-worker and manifest file)
-#####################################################################
-# Intitaties Manifest Route
-@app.route("/manifest.json")
-def manifest():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/", "manifest.json")
-
-# Intiates service-worker route
-@app.route("/service-worker.js")
-def service_worker():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/", "service-worker.js")
-
-# Intiates CSS and JS for the HTML page
-@app.route("/templates/static/styles.css")
-def css():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "styles.css")
-# Intiates app.js route
-@app.route("/templates/static/app.js")
-def app_js():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "app.js")
-# Sends Icon route
-@app.route("/templates/static/icon.png")
-def icon():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "icon.png")
-# Renders offline.html if there is no internet for service-worker
-@app.route("/offline.html")
-def offline():
-    return render_template("offline.html")
-#####################################################################
 
 # Defines index route
 @app.route("/")
