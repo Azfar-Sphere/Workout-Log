@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, abort
+from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -36,9 +36,13 @@ def css():
 def app_js():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "app.js")
 
+@app.route("/templates/static/icon.png")
+def icon():
+    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "icon.png")
+
 @app.route("/offline.html")
 def offline():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/offline.html", "offline.html")
+    return render_template("offline.html")
 
 #####################################################################
 
@@ -46,10 +50,11 @@ def offline():
 @app.route("/")
 def index():
     # Checks if user is Logged in
-    if "username" in session:
-        return render_template("index.html")
-    else:
+    if "username" not in session:
         return redirect(url_for("login"))
+    else:
+        return render_template("index.html")
+        
     
 
 @app.route("/register", methods=["GET", "POST"])
