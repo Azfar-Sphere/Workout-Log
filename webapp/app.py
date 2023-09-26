@@ -14,7 +14,3 @@ app.register_blueprint(pwa_bp)
 def index():
     render_template("index.html")
     
-
-@app.route("/error")
-def error(message):
-    return render_template("error.html", error=message)    
