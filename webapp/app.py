@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for
+from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, flash
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -70,19 +70,21 @@ def register():
 
         # Checks valid username and password
         if not username or not password:
-            error("Please Enter Username and Password")
+            return render_template("error.html", error="Invalid Username/Password")
 
-        if username in usernameRow:
-            error("Username Taken")
+        elif username in usernameRow:
+            return render_template("error.html", error="Username not available")
 
-        if password != conpassword:
-            error("Password do not match!")    
+        elif password != conpassword:
+            return render_template("error.html", error="Passwords do not match!")
 
-        # Adds user detail to users database
-        passwordHash = generate_password_hash("password")
-        usersCursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, passwordHash))
-        connUsers.commit()
-        return redirect(url_for("login"))
+        else:
+            # Adds user detail to users database
+            passwordHash = generate_password_hash("password")
+            usersCursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, passwordHash))
+            connUsers.commit()
+            flash("Successfully registered", category="success")
+            return redirect(url_for("login"))
     
     if request.method == "GET":
         return render_template("register.html")
@@ -100,10 +102,10 @@ def login():
 
         # Checks validity of login details
         if not usernameRow:
-            error("Invalid username")
+            return render_template("error.html", error="Invalid Username")
 
         if not check_password_hash(usernameRow[1], "password"):
-            error("Incorrect Password")
+            return render_template("error.html", error="Invalid Password")
 
         # If Login successful
         session["username"] = username
