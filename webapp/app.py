@@ -23,11 +23,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
 usersDb.init_app(app)
 
 #Configures Login
-login_manager = LoginManager()
-login_manager.init_app(app)
-@login_manager.user_loader
-def load_user(user_id):
-    return User.get(user_id)
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User.get(user_id)
 
 # Sets PWA Config (Service-worker and manifest file)
 #####################################################################
