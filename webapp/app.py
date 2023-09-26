@@ -1,18 +1,20 @@
 from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, flash
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 # Connects to users table
-connUsers = sqlite3.connect("users.db")
-usersCursor = connUsers.cursor()
+usersDb = SQLAlchemy()
+DB_NAME = "users.db"
 
 # Configures Flask to use Server-Side Session Storage
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
+# Configures Database
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
 Session(app)
 
 # Sets PWA Config (Service-worker and manifest file)
