@@ -15,8 +15,8 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
 Session(app)
 
+# Sets PWA Config (Service-worker and manifest file)
 #####################################################################
-# Sets PWA Config
 # Intitaties Manifest Route
 @app.route("/manifest.json")
 def manifest():
@@ -35,15 +35,14 @@ def css():
 @app.route("/templates/static/app.js")
 def app_js():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "app.js")
-
+# Sends Icon route
 @app.route("/templates/static/icon.png")
 def icon():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "icon.png")
-
+# Renders offline.html if there is no internet
 @app.route("/offline.html")
 def offline():
     return render_template("offline.html")
-
 #####################################################################
 
 # Defines index route
