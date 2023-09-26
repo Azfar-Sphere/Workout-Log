@@ -1,9 +1,9 @@
 import os
 from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, flash
 from flask_session import Session
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import SQLAlchemy, User
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
