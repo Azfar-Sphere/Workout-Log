@@ -36,6 +36,10 @@ def css():
 def app_js():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "app.js")
 
+@app.route("/offline.html")
+def offline():
+    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/offline.html", "offline.html")
+
 #####################################################################
 
 # Defines index route
