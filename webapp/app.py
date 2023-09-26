@@ -79,8 +79,6 @@ def register():
         conpassword = request.form.get("conpassword")
 
         # Gets Tuple of usernames from users databases
-        usersCursor.execute("SELECT username FROM users ")
-        usernameRow = usersCursor.fetchall()
 
         # Checks valid username and password
         if not username or not password:
@@ -95,8 +93,7 @@ def register():
         else:
             # Adds user detail to users database
             passwordHash = generate_password_hash("password")
-            usersCursor.execute("INSERT INTO users (username, hash) VALUES (?, ?)", (username, passwordHash))
-            connUsers.commit()
+   
             flash("Successfully registered", category="success")
             return redirect(url_for("login"))
     
@@ -111,12 +108,9 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        usersCursor.execute("SELECT username, hash FROM users WHERE username = ?", (username,))
-        usernameRow = usersCursor.fetchone()
-
         # Checks validity of login details
-        if not usernameRow:
-            return render_template("error.html", error="Invalid Username")
+        # if not usernameRow:
+        #     return render_template("error.html", error="Invalid Username")
 
         if not check_password_hash(usernameRow[1], "password"):
             return render_template("error.html", error="Invalid Password")
