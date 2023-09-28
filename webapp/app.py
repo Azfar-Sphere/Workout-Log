@@ -68,7 +68,7 @@ def register():
         else:
             # Adds user detail to users database
             passwordHash = generate_password_hash("password")
-   
+
             flash("Successfully registered", category="success")
             return redirect(url_for("login"))
     
