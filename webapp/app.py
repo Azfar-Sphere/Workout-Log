@@ -59,7 +59,7 @@ def register():
         if not username or not password:
             return render_template("error.html", error="Invalid Username/Password")
 
-        elif username in usernameRow:
+        # elif username in usernameRow:
             return render_template("error.html", error="Username not available")
 
         elif password != conpassword:
@@ -87,8 +87,8 @@ def login():
         # if not usernameRow:
         #     return render_template("error.html", error="Invalid Username")
 
-        if not check_password_hash(usernameRow[1], "password"):
-            return render_template("error.html", error="Invalid Password")
+        # if not check_password_hash(usernameRow[1], "password"):
+        return render_template("error.html", error="Invalid Password")
 
         # If Login successful
         session["username"] = username
