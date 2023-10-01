@@ -1,10 +1,11 @@
 import os
 from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, flash
 from flask_session import Session
-from flask_login import LoginManager, login_user, logout_user
+from flask_login import LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from pwa_routes import pwa_bp
+from tables import User
 
 app = Flask(__name__)
 app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
@@ -13,7 +14,7 @@ app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
 app.register_blueprint(pwa_bp)
 
 # Connects to users table
-usersDb = SQLAlchemy()
+db = SQLAlchemy()
 DB_NAME = "users.db"
 
 # Configures Flask to use Server-Side Session Storage
@@ -24,18 +25,20 @@ Session(app)
 
 # Configures Database
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
-usersDb.init_app(app)
+db.init_app(app)
 
 #Configures Login
-# login_manager = LoginManager()
-# login_manager.init_app(app)
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.get(user_id)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 # Defines index route
 @app.route("/")
+@login_required
 def index():
     # Checks if user is Logged in
     if "username" not in session:
@@ -100,6 +103,7 @@ def login():
 
 #Logsout
 @app.route("/logout")
+@login_required
 def logout():
     session.pop("username", None)
     return redirect(url_for("login"))
