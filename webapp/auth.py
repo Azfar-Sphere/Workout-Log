@@ -1,9 +1,9 @@
 # Handles Authentication functionality
-from app import app, db  
+from . import db  
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-from tables import User
+from .tables import User
 
 auth = Blueprint("auth", __name__)
 
