@@ -89,26 +89,26 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # Checks validity of login details
-        # if not usernameRow:
-        #     return render_template("error.html", error="Invalid Username")
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash("Incorrect username", category='error')
 
-        # if not check_password_hash(usernameRow[1], "password"):
-        return render_template("error.html", error="Invalid Password")
+        elif not check_password_hash(user.password, "password"):
+            flash("Incorrect Password", category='error')
 
         # If Login successful
-        session["username"] = username
+        login_user(user, remember=True)
+        flash("Logged in successfully", category='success')
         return redirect(url_for("index"))
 
-# GET returns login page
-    if request.method == "GET":
-        return render_template("login.html")
+    return render_template("login.html")
 
 #Logsout
 @app.route("/logout")
 @login_required
 def logout():
     session.pop("username", None)
+    logout_user()
     return redirect(url_for("login"))
 
 @app.route("/error")
