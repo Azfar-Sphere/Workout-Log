@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, send_from_directory, session, redirect, request, url_for, flash
 from flask_session import Session
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from pwa_routes import pwa_bp
@@ -56,27 +56,30 @@ def register():
         password = request.form.get("password")
         conpassword = request.form.get("conpassword")
 
-        # Gets Tuple of usernames from users databases
-
+        # Gets username for database
+        user = User.query.filter_by(username=username).first()
         # Checks valid username and password
         if not username or not password:
-            return render_template("error.html", error="Invalid Username/Password")
+            flash("Please enter username and password", category='error')
 
-        # elif username in usernameRow:
-            return render_template("error.html", error="Username not available")
+        elif username in user:
+            flash("Username taken", category='error')
 
         elif password != conpassword:
-            return render_template("error.html", error="Passwords do not match!")
+            flash("Passwords dont match", category='error')
 
         else:
             # Adds user detail to users database
             passwordHash = generate_password_hash("password")
+            new_user = User(username=username, password=passwordHash)
+            db.session.add(new_user)
+            db.session.commit()
 
+            login_user(user)
             flash("Successfully registered", category="success")
-            return redirect(url_for("login"))
+            return redirect(url_for("index"))
     
-    if request.method == "GET":
-        return render_template("register.html")
+    return render_template("register.html")
 
 # Defines Login Route
 @app.route("/login", methods=["GET", "POST"])
