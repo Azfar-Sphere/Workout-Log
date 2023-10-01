@@ -21,7 +21,7 @@ def register():
         if not username or not password:
             flash("Please enter username and password", category='error')
 
-        elif username in user:
+        elif user:
             flash("Username taken", category='error')
 
         elif password != conpassword:
@@ -29,14 +29,14 @@ def register():
 
         else:
             # Adds user detail to users database
-            passwordHash = generate_password_hash("password")
-            new_user = User(username=username, password=passwordHash)
-            db.session.add(new_user)
+            passwordHash = generate_password_hash(password)
+            user = User(username=username, password=passwordHash)
+            db.session.add(user)
             db.session.commit()
 
             login_user(user)
             flash("Successfully registered", category="success")
-            return redirect(url_for("app.index"))
+            return redirect(url_for("routes.index"))
     
     return render_template("register.html")
 
@@ -48,17 +48,19 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
+        # Checks login criteria
         user = User.query.filter_by(username=username).first()
-        if user is None:
+        
+        if not user is None:
+            # If Login successful
+            if check_password_hash(user.password, password):
+                login_user(user, remember=True)
+                flash("Logged in successfully", category='success')
+                return redirect(url_for("routes.index"))
+            else:
+                flash('Incorrect Password', category='error')   
+        else:
             flash("Incorrect username", category='error')
-
-        elif not check_password_hash(user.password, password):
-            flash("Incorrect Password", category='error')
-
-        # If Login successful
-        login_user(user, remember=True)
-        flash("Logged in successfully", category='success')
-        return redirect(url_for("app.index"))
 
     return render_template("login.html")
 
@@ -67,5 +69,5 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for("auth.login"))
 

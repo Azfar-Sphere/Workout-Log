@@ -32,7 +32,7 @@ def create_app():
     # Creates Database
     if not os.path.exists(db_path):
         with app.app_context():
-            db.create_all
+            db.create_all()
             print("Created Database")
     else:
         print("Database exists, skipping database creation")
