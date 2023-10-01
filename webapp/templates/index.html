@@ -5,5 +5,7 @@ Index
 {% endblock %}
 
 {% block main %}
-    <h1>Workout</h1>
+    <a href="{{ url_for('login') }}"><h1>Login</h1></a>
+    <a href="{{ url_for('register') }}"><h1>Register</h1></a>
+    <a href="{{ url_for('logout') }}"><h1>Logout</h1></a>
 {% endblock %}
