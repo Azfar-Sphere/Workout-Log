@@ -4,8 +4,8 @@ from flask_session import Session
 from flask_login import LoginManager, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from pwa_routes import pwa_bp
-from tables import User
 from auth import auth
+from auth import configure_login
 
 app = Flask(__name__)
 app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
@@ -33,7 +33,7 @@ if not os.path.exists(db_path):
 else:
     print("Database exists, skipping database creation")
 
-#Configures Login
+# Configures Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -43,11 +43,11 @@ def load_user(id):
 
 
 # Defines index route
-@app.route("/")
+@auth.route("/")
 @login_required
 def index():
     return render_template("index.html")
-        
+
 @app.route("/error")
 def error():
     return render_template("error.html")    
