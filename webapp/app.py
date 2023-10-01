@@ -24,8 +24,16 @@ app.config["SESSION_USE_SIGNER"] = True
 Session(app)
 
 # Configures Database
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
+db_path = os.path.join(app.root_path, DB_NAME)
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 db.init_app(app)
+# Creates Database
+if not os.path.exists(db_path):
+    with app.app_context():
+        db.create_all
+        print("Created Database")
+else:
+    print("Database exists, skipping database creation")
 
 #Configures Login
 login_manager = LoginManager()
@@ -112,5 +120,5 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/error")
-def error(message):
-    return render_template("error.html", error=message)    
+def error():
+    return render_template("error.html")    
