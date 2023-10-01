@@ -93,7 +93,7 @@ def login():
         if user is None:
             flash("Incorrect username", category='error')
 
-        elif not check_password_hash(user.password, "password"):
+        elif not check_password_hash(user.password, password):
             flash("Incorrect Password", category='error')
 
         # If Login successful
