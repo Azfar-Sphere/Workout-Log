@@ -5,8 +5,9 @@ from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from tables import User
 
+auth = Blueprint("auth", __name__)
 
-@app.route("/register", methods=["GET", "POST"])
+@auth.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         # Gets Password
@@ -35,12 +36,12 @@ def register():
 
             login_user(user)
             flash("Successfully registered", category="success")
-            return redirect(url_for("index"))
+            return redirect(url_for("app.index"))
     
     return render_template("register.html")
 
 # Defines Login Route
-@app.route("/login", methods=["GET", "POST"])
+@auth.route("/login", methods=["GET", "POST"])
 def login():
     # Receives username and password
     if request.method == "POST":
@@ -57,12 +58,12 @@ def login():
         # If Login successful
         login_user(user, remember=True)
         flash("Logged in successfully", category='success')
-        return redirect(url_for("index"))
+        return redirect(url_for("app.index"))
 
     return render_template("login.html")
 
 #Logsout
-@app.route("/logout")
+@auth.route("/logout")
 @login_required
 def logout():
     logout_user()

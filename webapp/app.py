@@ -5,6 +5,7 @@ from flask_login import LoginManager, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from pwa_routes import pwa_bp
 from tables import User
+from auth import auth
 
 app = Flask(__name__)
 app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
@@ -14,6 +15,7 @@ if __name__ == "__app__":
 
 # Registers Blueprints
 app.register_blueprint(pwa_bp)
+app.register_blueprint(auth)
 
 # Connects to users table
 db = SQLAlchemy()
@@ -44,11 +46,7 @@ def load_user(id):
 @app.route("/")
 @login_required
 def index():
-    # Checks if user is Logged in
-    if "username" not in session:
-        return redirect(url_for("login"))
-    else:
-        return render_template("index.html")
+    return render_template("index.html")
         
 @app.route("/error")
 def error():
