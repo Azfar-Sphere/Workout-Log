@@ -17,7 +17,7 @@ class Workout(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     workout_number = db.Column(db.Integer, nullable=False, unique=False)
 
-# Creates individual workout numbers for each User
+# Creates individual workout numbers for each User 
 @event.listens_for(Workout, 'before_insert')
 def update_workout_number(mapper, connection, target):
     max_workout_number = db.session.query(func.max(Workout.workout_number)).filter_by(user_id = current_user.id).scalar()
