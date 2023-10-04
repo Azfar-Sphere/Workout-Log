@@ -5,10 +5,24 @@ Register
 {% endblock %}
 
 {% block main %}
+<br><br>
+<div class="container">    
     <form action="/register" method="post">
-        <input name="username" placeholder="Username" id="username" type="text">
-        <input name="password" placeholder="Password" id="password" type="password">
-        <input name="conpassword" placeholder="Confirm Password" id="conpassword" type="password">
-        <button type="submit">Register</button>
-    </form>
+                <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control" name="username" placeholder="Username" id="username" type="text">
+                </div>
+                <div class="mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input class="form-control" name="password" placeholder="Password" id="password" type="password">
+                </div>
+                <div class="mb-3">
+                <label for="conpassword" class="form-label">Confirm password</label>
+                <input class="form-control" name="conpassword" placeholder="Confirm Password" id="conpassword" type="password">
+                </div>
+                <div class="mb-3"></div>
+                <button type="submit" class="btn btn-dark">Register</button>
+                </div>
+        </form>
+</div>
 {% endblock %}
