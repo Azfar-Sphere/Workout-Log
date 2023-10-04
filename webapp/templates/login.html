@@ -5,9 +5,20 @@ Login
 {% endblock %}
 
 {% block main %}
+<br><br>
+<div class="container">    
     <form action="/login" method="post">
-        <input name="username" placeholder="Username" id="username" type="text">
-        <input name="password" placeholder="Password" is="password" type="password">
-        <button type="submit">Login</button>
-    </form>
+                <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control" name="username" placeholder="Username" id="username" type="text">
+                </div>
+                <div class="mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input class="form-control" name="password" placeholder="Password" id="password" type="password">
+                </div>
+                <div class="mb-3"></div>
+                <button type="submit" class="btn btn-dark">Login</button>
+                </div>
+        </form>
+</div>
 {% endblock %}
