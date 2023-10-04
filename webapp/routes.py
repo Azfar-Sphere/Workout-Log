@@ -15,7 +15,7 @@ def index():
         db.session.add(new_workout)
         db.session.commit()
 
-    workouts = db.session.query(Workout).all()
+    workouts = db.session.query(Workout).filter(Workout.user_id == current_user.id).all()
     return render_template("index.html", workouts=workouts)
 
 @routes.route("/error")
