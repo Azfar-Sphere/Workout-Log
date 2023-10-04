@@ -5,5 +5,22 @@ Index
 {% endblock %}
 
 {% block main %}
-<h1>Index</h1>
+<div class="containter-fluid">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Workout</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        {% for workout in workouts %}
+        <tr>
+            <th scope="row">{{ workout.work }}</th>
+            <td>{{ workout.date }}</td>
+        </tr>
+            {% endfor %}
+    </table>
+    <br>
+    <button class="btn btn-primary" type="submit" action="/" method="post">Add Workout</button>
+</div>
 {% endblock %}
