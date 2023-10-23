@@ -22,3 +22,9 @@ def index():
 @routes.route("/error")
 def error():
     return render_template("error.html")    
+
+@routes.route("/workout/<int:id>")
+@login_required
+def workout(id):
+    db.session.query(Workout).filter_by(id = id).all()
+    return render_template("workout.html")

@@ -11,12 +11,14 @@ Index
             <tr>
                 <th scope="col">Workout</th>
                 <th scope="col">Date</th>
+                <th scope="col">Workout Details</th>
             </tr>
         </thead>
         {% for workout in workouts %}
         <tr>
             <th scope="row">{{ workout.workout_number}}</th>
             <td>{{ workout.date }}</td>
+            <td><a href="/workout/{{ workout.id }}" class="btn btn-outline-success">Add To Workout</a></td>
         </tr>
         {% endfor %}
     </table>
