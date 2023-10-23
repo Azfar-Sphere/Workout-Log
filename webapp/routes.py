@@ -34,4 +34,4 @@ def workout(id):
     elif user != current_user.id:
         return redirect(url_for("routes.error"))
 
-    return render_template("workout.html")
+    return render_template("workout.html", workoutId = id)
