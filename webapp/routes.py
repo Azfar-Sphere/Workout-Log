@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, url_for, redirect
 from flask_login import login_required, current_user
 from .tables import Workout
 from . import db
@@ -23,8 +23,15 @@ def index():
 def error():
     return render_template("error.html")    
 
+#Defines Each Workout Route
 @routes.route("/workout/<int:id>")
 @login_required
 def workout(id):
-    db.session.query(Workout).filter_by(id = id).all()
+    user = db.session.query(Workout.user_id).filter_by(id = id).scalar()
+
+    if user is None:
+        return redirect(url_for("routes.error"))
+    elif user != current_user.id:
+        return redirect(url_for("routes.error"))
+
     return render_template("workout.html")
