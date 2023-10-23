@@ -8,5 +8,5 @@ Index
 
 <h1>Workout Details</h1>
 <script>var workoutId = {{ workoutId }}</script>
-<script src="static/workout.js"></script>
+<script src="{{ url_for('pwa.workout_js') }}"></script>
 {% endblock %}

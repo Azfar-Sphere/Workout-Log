@@ -22,6 +22,10 @@ def css():
 @pwa_bp.route("/static/app.js")
 def app_js():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "app.js")
+# Intiates workout.js route
+@pwa_bp.route("/static/workout.js")
+def workout_js():
+    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "workout.js")
 # Sends Icon route
 @pwa_bp.route("/templates/static/icon.png")
 def icon():
