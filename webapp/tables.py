@@ -16,6 +16,14 @@ class Workout(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     workout_number = db.Column(db.Integer, nullable=False, unique=False)
 
+class Exercise(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(150), nullable = False)
+    sets = db.Column(db.String(150), nullable = False)
+    weight = db.Column(db.String(150), default = "Bodyweight")
+    workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'))
+
+
 # Creates individual workout numbers for each User 
 @event.listens_for(Workout, 'before_insert')
 def update_workout_number(mapper, connection, target):
