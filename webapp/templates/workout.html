@@ -6,6 +6,12 @@ Index
 
 {% block main %}
 
-<h1>Workout Details</h1>
-<script>var workoutId = {{ workoutId }}</script>
+<h1 id="Workout" style="text-align: center;">Workout Details</h1>
+<script>
+var workoutNumber = {{ workoutNumber }}; 
+heading = document.getElementById("Workout");
+
+console.log(heading.innerText);
+heading.innerText = "Workout" + " " + workoutNumber;
+</script>
 {% endblock %}
