@@ -5,7 +5,7 @@ Index
 {% endblock %}
 
 {% block main %}
-
+<br>
 <h1 id="Workout" style="text-align: center;">Workout Details</h1>
 
 
@@ -29,23 +29,50 @@ Index
     <br>
     <div class="container text-center">
         <form action="/newworkout" method="post">
-
+            <input class="form-control mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Sets">
+            <br>
+            <div id="reps-container">
+            </div>
+            <br>
             <button class="btn btn-primary" type="submit" >Add Exercise</button>
         </form>
     </div>
 </div>
 
 
-
-
-
-
-
-<!-- Changes Heading to the Number of Each Workout-->
 <script>
+// Changes the Heading of Each Workout
 var workoutNumber = {{ workoutNumber }}; 
-heading = document.getElementById("Workout");
+const changeHeading = (workoutNumber) =>
+{
+    heading = document.getElementById("Workout");
+    heading.innerText = "Workout" + " " + workoutNumber;
+}
+changeHeading(workoutNumber);
 
-heading.innerText = "Workout" + " " + workoutNumber;
+// Adds the number of input field based on the number of sets
+let sets = document.getElementById("sets");
+
+const generateRepsFields = () => 
+{
+    var repsContainer = document.getElementById("reps-container");
+
+    repsContainer.innerHTML = "";
+
+    var numberSets = parseInt(sets.value);
+
+    for (var i = 1; i <= numberSets; i++)
+    {
+        var repsInput = document.createElement("input");
+        repsInput.setAttribute("class", "form-control mx-auto w-auto");
+        repsInput.setAttribute("name", "reps_" + i);
+        repsInput.setAttribute("type", "text");
+        repsInput.setAttribute("placeholder", "Reps for Set" + " " + i);
+        repsContainer.appendChild(repsInput);
+    }
+}
+
+sets.addEventListener("input", generateRepsFields);
+
 </script>
 {% endblock %}
