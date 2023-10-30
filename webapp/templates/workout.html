@@ -28,13 +28,13 @@ Index
     </table>
     <br>
     <div class="container text-center">
-        <form action="/newworkout" method="post">
+        <form>
             <input class="form-control mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Sets">
             <br>
             <div id="reps-container">
             </div>
             <br>
-            <button class="btn btn-primary" type="submit" >Add Exercise</button>
+            <button class="btn btn-primary" id="submit_sets" type="submit" >Add Exercise</button>
         </form>
     </div>
 </div>
@@ -52,27 +52,51 @@ changeHeading(workoutNumber);
 
 // Adds the number of input field based on the number of sets
 let sets = document.getElementById("sets");
+let repsContainer;
 
 const generateRepsFields = () => 
 {
-    var repsContainer = document.getElementById("reps-container");
+    repsContainer = document.getElementById("reps-container");
 
     repsContainer.innerHTML = "";
 
-    var numberSets = parseInt(sets.value);
+    let numberSets = parseInt(sets.value);
 
     for (var i = 1; i <= numberSets; i++)
     {
         var repsInput = document.createElement("input");
         repsInput.setAttribute("class", "form-control mx-auto w-auto");
         repsInput.setAttribute("name", "reps_" + i);
+        repsInput.setAttribute("id", "reps_" + i);
         repsInput.setAttribute("type", "text");
         repsInput.setAttribute("placeholder", "Reps for Set" + " " + i);
         repsContainer.appendChild(repsInput);
     }
+
+}
+sets.addEventListener("input", generateRepsFields);
+
+// On Submits Creates new Set and Reps Field;
+
+const setAndReps = () =>
+{
+    let setReps = document.createElement("p")
+    setReps.innerText = "";
+
+    repsContainer = document.getElementById("reps-container");
+
+    for (var i = 1; i <= numberSets; i++)
+    {
+        reps = document.getElementById("reps_" + i);
+        console.log("Hi");
+        setReps.textContent += reps;
+    }
+
+    repsContainer.appendChild(setReps);
 }
 
-sets.addEventListener("input", generateRepsFields);
+document.getElementById("submit_sets").addEventListener("submit", setAndReps());
+
 
 </script>
 {% endblock %}
