@@ -7,11 +7,45 @@ Index
 {% block main %}
 
 <h1 id="Workout" style="text-align: center;">Workout Details</h1>
+
+
+<div class="containter-fluid">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Exercise</th>
+                <th scope="col">Sets x Reps</th>
+                <th scope="col">Weight Per Set</th>
+            </tr>
+        </thead>
+        {% for exercise in exercises %}
+        <tr>
+            <th scope="row">{{ exercise.name }}</th>
+            <td>{{ exercise.sets }}</td>
+            <td>{{ exercise.weight }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <div class="container text-center">
+        <form action="/" method="post">
+            
+            <button class="btn btn-primary" type="submit" >Add Exercise</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- Changes Heading to the Number of Each Workout-->
 <script>
 var workoutNumber = {{ workoutNumber }}; 
 heading = document.getElementById("Workout");
 
-console.log(heading.innerText);
 heading.innerText = "Workout" + " " + workoutNumber;
 </script>
 {% endblock %}

@@ -35,4 +35,6 @@ def workout(id):
         return redirect(url_for("routes.error"))
 
     workoutNumber = db.session.query(Workout.workout_number).filter_by(id = id).scalar();
-    return render_template("workout.html", workoutNumber = workoutNumber)
+
+    exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
+    return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises)
