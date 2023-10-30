@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, url_for, redirect
 from flask_login import login_required, current_user
-from .tables import Workout
+from .tables import Workout, Exercise
 from . import db
 
 routes = Blueprint("routes", __name__)
