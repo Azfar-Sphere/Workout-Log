@@ -38,3 +38,9 @@ def workout(id):
 
     exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
     return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises)
+
+@routes.route("/newworkout", methods=["POST"])
+@login_required
+def newWorkout():
+    
+    reps = request.form.get("reps")
