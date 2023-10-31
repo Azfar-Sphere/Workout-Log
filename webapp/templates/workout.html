@@ -34,7 +34,7 @@ Index
             <div id="reps-container">
             </div>
             <br>
-            <button class="btn btn-primary" id="submit_sets" type="submit" >Add Exercise</button>
+            <button class="btn btn-primary" id="set-submit" type="submit" >Add Exercise</button>
         </form>
     </div>
 </div>
@@ -51,16 +51,18 @@ const changeHeading = (workoutNumber) =>
 changeHeading(workoutNumber);
 
 // Adds the number of input field based on the number of sets
+
+let numberSets = 0;
+let repsContainer = document.getElementById("reps-container");
 let sets = document.getElementById("sets");
-let repsContainer;
 
 const generateRepsFields = () => 
 {
-    repsContainer = document.getElementById("reps-container");
-
+    let sets = document.getElementById("sets");
+    
     repsContainer.innerHTML = "";
 
-    let numberSets = parseInt(sets.value);
+    numberSets = parseInt(sets.value);
 
     for (var i = 1; i <= numberSets; i++)
     {
@@ -76,27 +78,33 @@ const generateRepsFields = () =>
 }
 sets.addEventListener("input", generateRepsFields);
 
-// On Submits Creates new Set and Reps Field;
 
-const setAndReps = () =>
-{
-    let setReps = document.createElement("p")
-    setReps.innerText = "";
 
+
+const addReps = () =>
+{   
     repsContainer = document.getElementById("reps-container");
+    let reps = document.createElement("p");
 
     for (var i = 1; i <= numberSets; i++)
     {
-        reps = document.getElementById("reps_" + i);
-        console.log("Hi");
-        setReps.textContent += reps;
-    }
+        if (i != numberSets)
+        {
+            repsField = document.getElementById("reps_" + i).value;
+            reps.textContent +=  repsField + "," + " ";
+        }
 
-    repsContainer.appendChild(setReps);
+        else
+        {
+            reps.textContent += repsField;
+        }
+    }   
+
+    repsContainer.appendChild(reps);
 }
 
-document.getElementById("submit_sets").addEventListener("submit", setAndReps());
-
+let submitBtn = document.getElementById("set-submit");
+submitBtn.addEventListener("mouseover", addReps);
 
 </script>
 {% endblock %}
