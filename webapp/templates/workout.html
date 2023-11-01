@@ -25,18 +25,24 @@ Index
             <td>{{ exercise.weight }}</td>
         </tr>
         {% endfor %}
+        <tr>
+            <form action="/newworkout" method="post">
+                <th scope="row">
+                    <input class="form-control mx-auto w-auto" id="e_name" name="e_name" type="text" placeholder="Exercise">
+                </th>
+                <td>
+                    <input class="form-control mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Sets">
+                </td>
+                <td>    
+                    <input class="form-control mx-auto w-auto" id="weight " name="weight" type="text" placeholder="Weight">
+                </td>
+                <td>
+                <button class="btn btn-primary" id="set-submit" type="submit" >Add Exercise</button>
+                </td>
+            </form>
+        </tr>
     </table>
-    <br>
-    <div class="container text-center">
-        <form action="/newworkout" method="post">
-            <input class="form-control mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Sets">
-            <br>
-            <div id="reps-container">
-            </div>
-            <br>
-            <button class="btn btn-primary" id="set-submit" type="submit" >Add Exercise</button>
-        </form>
-    </div>
+
 </div>
 
 
@@ -49,67 +55,6 @@ const changeHeading = (workoutNumber) =>
     heading.innerText = "Workout" + " " + workoutNumber;
 }
 changeHeading(workoutNumber);
-
-// Adds the number of input field based on the number of sets
-
-let numberSets = 0;
-let repsContainer = document.getElementById("reps-container");
-let sets = document.getElementById("sets");
-
-const generateRepsFields = () => 
-{
-    let sets = document.getElementById("sets");
-    
-    repsContainer.innerHTML = "";
-
-    numberSets = parseInt(sets.value);
-
-    for (var i = 1; i <= numberSets; i++)
-    {
-        var repsInput = document.createElement("input");
-        repsInput.setAttribute("class", "form-control mx-auto w-auto");
-        repsInput.setAttribute("name", "reps_" + i);
-        repsInput.setAttribute("id", "reps_" + i);
-        repsInput.setAttribute("type", "text");
-        repsInput.setAttribute("placeholder", "Reps for Set" + " " + i);
-        repsContainer.appendChild(repsInput);
-    }
-
-}
-sets.addEventListener("input", generateRepsFields);
-
-
-
-
-const addReps = () =>
-{   
-    repsContainer = document.getElementById("reps-container");
-    let reps = document.createElement("p");
-
-    for (var i = 1; i <= numberSets; i++)
-    {
-        if (i != numberSets)
-        {
-            repsField = document.getElementById("reps_" + i).value;
-            reps.textContent +=  repsField + "," + " ";
-        }
-
-        else
-        {
-            reps.textContent += repsField;
-        }
-    }   
-
-    reps.setAttribute("name", "reps");
-    reps.setAttribute("id", "reps");
-    reps.setAttribute("style", "visibility: hidden;");
-    reps.setAttribute("style", "display: none;");
-
-    repsContainer.appendChild(reps);
-}
-
-let submitBtn = document.getElementById("set-submit");
-submitBtn.addEventListener("mouseover", addReps);
 
 </script>
 {% endblock %}
