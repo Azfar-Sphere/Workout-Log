@@ -52,10 +52,13 @@ def newWorkout():
         if int(userId) != current_user.id:
             return redirect(url_for("routes.error"))
         
+        if not weight:
+            weight = "Bodyweight"
+    
         new_exercise = Exercise(name = exercise, sets = sets, weight = weight, workout_id = workoutId)
         db.session.add(new_exercise)
         db.session.commit()
 
-    return redirect(url_for("routes.index"))
+    return redirect(url_for("routes.workout", id = workoutId))
 
 
