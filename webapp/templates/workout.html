@@ -22,6 +22,7 @@ Index
             <th scope="row">{{ exercise.name }}</th>
             <td>{{ exercise.sets }}</td>
             <td>{{ exercise.weight }}</td>
+            <td><a href="/delete_e/{{ exercise.id }}" class="btn btn-danger">Delete Exercise</a></td>
         </tr>
         {% endfor %}
         <tr>
@@ -41,6 +42,8 @@ Index
                 <button class="btn btn-primary" id="set-submit" type="submit" >Add Exercise</button>
                 </td>
             </form>
+            <td>
+            </td>
         </tr>
     </table>
 

@@ -39,7 +39,8 @@ def workout(id):
     exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
     return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises, user = user, workoutId = id)
 
-@routes.route("/delete/<int:id>")
+
+@routes.route("/delete_w/<int:id>")
 @login_required
 def deleteWorkout(id):
     user = db.session.query(Workout.user_id).filter_by(id = id).scalar()
@@ -79,4 +80,21 @@ def newWorkout():
 
     return redirect(url_for("routes.workout", id = workoutId))
 
+@routes.route("/delete_e/<int:id>")
+@login_required
+def deleteExerciset(id):
+    workoutId = db.session.query(Exercise.workout_id).filter_by(id = id).scalar()
+    user = db.session.query(Workout.user_id).filter_by(id = workoutId).scalar()
+
+    if user is None:
+        return redirect(url_for("routes.error"))
+    elif user != current_user.id:
+        return redirect(url_for("routes.error"))
+    
+    exercise = db.session.query(Exercise).filter_by(id = id).first()
+    if exercise:
+        db.session.delete(exercise)
+        db.session.commit()
+
+    return redirect(url_for("routes.workout", id = workoutId))
 
