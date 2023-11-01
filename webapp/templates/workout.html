@@ -8,13 +8,12 @@ Index
 <br>
 <h1 id="Workout" style="text-align: center;">Workout Details</h1>
 
-
 <div class="containter-fluid">
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">Exercise</th>
-                <th scope="col">Sets x Reps</th>
+                <th scope="col">Reps per Set</th>
                 <th scope="col">Weight Per Set</th>
             </tr>
         </thead>
@@ -27,9 +26,11 @@ Index
         {% endfor %}
         <tr>
             <form action="/newworkout" method="post">
-                <th scope="row">
+                <input type="hidden" name="user" value="{{ user }}">
+                <input type="hidden" name="workoutId" value="{{ workoutId }}">
+                <td>
                     <input class="form-control mx-auto w-auto" id="e_name" name="e_name" type="text" placeholder="Exercise">
-                </th>
+                </td>
                 <td>
                     <input class="form-control mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Sets">
                 </td>

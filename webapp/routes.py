@@ -37,10 +37,25 @@ def workout(id):
     workoutNumber = db.session.query(Workout.workout_number).filter_by(id = id).scalar();
 
     exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
-    return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises)
+    return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises, user = user, workoutId = id)
 
 @routes.route("/newworkout", methods=["POST"])
 @login_required
 def newWorkout():
-    
-    reps = request.form.get("reps")
+    if request.method == "POST":
+        exercise = request.form.get("e_name")
+        sets = request.form.get("sets")
+        weight = request.form.get("weight")
+        userId = request.form.get("user")
+        workoutId = request.form.get("workoutId")
+
+        if int(userId) != current_user.id:
+            return redirect(url_for("routes.error"))
+        
+        new_exercise = Exercise(name = exercise, sets = sets, weight = weight, workout_id = workoutId)
+        db.session.add(new_exercise)
+        db.session.commit()
+
+    return redirect(url_for("routes.index"))
+
+
