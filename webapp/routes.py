@@ -39,6 +39,24 @@ def workout(id):
     exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
     return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises, user = user, workoutId = id)
 
+@routes.route("/delete/<int:id>")
+@login_required
+def deleteWorkout(id):
+    user = db.session.query(Workout.user_id).filter_by(id = id).scalar()
+
+    if user is None:
+        return redirect(url_for("routes.error"))
+    elif user != current_user.id:
+        return redirect(url_for("routes.error"))
+    
+    workout = db.session.query(Workout).filter_by(id = id).first()
+    if workout:
+        db.session.delete(workout)
+        db.session.commit()
+
+    return redirect(url_for("routes.index"))
+
+
 @routes.route("/newworkout", methods=["POST"])
 @login_required
 def newWorkout():

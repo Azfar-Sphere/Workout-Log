@@ -19,6 +19,7 @@ Index
             <th scope="row">{{ workout.workout_number}}</th>
             <td>{{ workout.date }}</td>
             <td><a href="/workout/{{ workout.id }}" class="btn btn-outline-success">Add To Workout</a></td>
+            <td><a href="/delete/{{ workout.id }}" class="btn btn-danger">Delete Workout</a></td>
         </tr>
         {% endfor %}
     </table>
