@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 db = SQLAlchemy()
-DB_NAME = "users.db"
+DB_NAME = "data.db"
 
 def create_app():
     # Creates App
