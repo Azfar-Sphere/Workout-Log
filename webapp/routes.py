@@ -43,17 +43,27 @@ def workout(id):
 @routes.route("/delete_w/<int:id>")
 @login_required
 def deleteWorkout(id):
-    user = db.session.query(Workout.user_id).filter_by(id = id).scalar()
+    workout = Workout.query.get(id)
 
-    if user is None:
+    if workout is None:
         return redirect(url_for("routes.error"))
-    elif user != current_user.id:
+    elif workout.user_id != current_user.id:
         return redirect(url_for("routes.error"))
     
-    workout = db.session.query(Workout).filter_by(id = id).first()
-    if workout:
-        db.session.delete(workout)
-        db.session.commit()
+    workout_number_to_delete = workout.workout_number
+
+    db.session.delete(workout)
+    db.session.commit()
+
+    workouts_to_update = Workout.query.filter(
+    Workout.user_id == current_user.id,
+    Workout.workout_number > workout_number_to_delete
+    ).all()
+
+    for workout in workouts_to_update:
+        workout.workout_number -= 1;
+    
+    db.session.commit()
 
     return redirect(url_for("routes.index"))
 
