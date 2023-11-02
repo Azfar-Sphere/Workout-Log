@@ -1,64 +1,71 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block title %} Index {% endblock %} {% block main
+%}
+<br />
+<h1 id="Workout" style="text-align: center">Workout Details</h1>
 
-{% block title %}
-Index
-{% endblock %}
-
-{% block main %}
-<br>
-<h1 id="Workout" style="text-align: center;">Workout Details</h1>
-
-<div class="containter-fluid">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Exercise</th>
-                <th scope="col">Reps per Set</th>
-                <th scope="col">Weight Per Set</th>
-            </tr>
-        </thead>
-        {% for exercise in exercises %}
-        <tr>
-            <th scope="row">{{ exercise.name }}</th>
-            <td>{{ exercise.sets }}</td>
-            <td>{{ exercise.weight }}</td>
-            <td><a href="/delete_e/{{ exercise.id }}" class="btn btn-danger">Delete Exercise</a></td>
-        </tr>
-        {% endfor %}
-        <tr>
-            <form action="/newworkout" method="post">
-                <input type="hidden" name="user" value="{{ user }}">
-                <input type="hidden" name="workoutId" value="{{ workoutId }}">
-                <td>
-                    <input class="form-control mx-auto w-auto" id="e_name" name="e_name" type="text" placeholder="Exercise">
-                </td>
-                <td>
-                    <input class="form-control mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Sets">
-                </td>
-                <td>    
-                    <input class="form-control mx-auto w-auto" id="weight " name="weight" type="text" placeholder="Weight">
-                </td>
-                <td>
-                <button class="btn btn-primary" id="set-submit" type="submit" >Add Exercise</button>
-                </td>
-            </form>
-            <td>
-            </td>
-        </tr>
-    </table>
-
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Exercise</th>
+        <th scope="col">Reps per Set</th>
+        <th scope="col">Weight Per Set</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    {% for exercise in exercises %}
+    <tr>
+      <td>{{ exercise.name }}</td>
+      <td>{{ exercise.sets }}</td>
+      <td>{{ exercise.weight }}</td>
+      <td>
+        <a href="/delete_e/{{ exercise.id }}" class="btn btn-danger"
+          >Delete Exercise</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
-
-
+<div class="text-center d-flex justify-content-center">
+  <form class="form" action="/newworkout" method="post">
+    <input type="hidden" name="user" value="{{ user }}" />
+    <input type="hidden" name="workoutId" value="{{ workoutId }}" />
+    <input
+      class="form-control mx-auto w-auto"
+      id="e_name"
+      name="e_name"
+      type="text"
+      placeholder="Exercise"
+    />
+    <input
+      class="form-control mx-auto w-auto"
+      id="sets"
+      name="sets"
+      type="text"
+      placeholder="Sets"
+    />
+    <input
+      class="form-control mx-auto w-auto"
+      id="weight "
+      name="weight"
+      type="text"
+      placeholder="Weight"
+    />
+    <br>
+    <button class="btn btn-primary mx-auto" id="set-submit" type="submit">
+      Add Exercise
+    </button>
+  </form>
+</div>
 <script>
-// Changes the Heading of Each Workout
-var workoutNumber = {{ workoutNumber }}; 
-const changeHeading = (workoutNumber) =>
-{
-    heading = document.getElementById("Workout");
-    heading.innerText = "Workout" + " " + workoutNumber;
-}
-changeHeading(workoutNumber);
-
+  // Changes the Heading of Each Workout
+  var workoutNumber = {{ workoutNumber }};
+  const changeHeading = (workoutNumber) =>
+  {
+      heading = document.getElementById("Workout");
+      heading.innerText = "Workout" + " " + workoutNumber;
+  }
+  changeHeading(workoutNumber);
 </script>
 {% endblock %}
