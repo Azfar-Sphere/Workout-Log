@@ -30,6 +30,14 @@ def workout_js():
 @pwa_bp.route("/templates/static/icon.png")
 def icon():
     return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static", "icon.png")
+
+@pwa_bp.route("/templates/static/logos/manifest-icon-192.maskable.png")
+def icon192():
+    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static/logos", "manifest-icon-192.maskable.png")
+
+@pwa_bp.route("/templates/static/logos/manifest-icon-512.maskable.png")
+def icon512():
+    return send_from_directory("/home/azfar/Workout-Log/webapp/templates/static/logos", "manifest-icon-512.maskable.png")
 # Renders offline.html if there is no internet for service-worker
 @pwa_bp.route("/offline.html")
 def offline():
