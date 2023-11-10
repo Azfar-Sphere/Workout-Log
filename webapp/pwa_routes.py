@@ -10,9 +10,9 @@ def manifest():
     return send_from_directory("/home/azfar/Workout-Log/webapp/", "manifest.json")
 
 # Intiates service-worker route
-@pwa_bp.route("/service-worker.js")
+@pwa_bp.route("/sw.js")
 def service_worker():
-    return send_from_directory("/home/azfar/Workout-Log/webapp/", "service-worker.js")
+    return send_from_directory("/home/azfar/Workout-Log", "sw.js")
 
 # Intiates CSS and JS for the HTML page
 @pwa_bp.route("/static/styles.css")
