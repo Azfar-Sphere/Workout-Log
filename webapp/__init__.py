@@ -46,11 +46,19 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
     
-    #intiates PWA routes
+    #intiates other PWA routes
     # Intiates workbox file routes
     @app.route("/workbox-ec057a90.js")
     def workbox():
         return send_from_directory(app.static_folder, "workbox-ec057a90.js")
+    
+    @app.route("/workbox-ec057a90.js.map")
+    def workbox_map():
+        return send_from_directory(app.static_folder, "workbox-ec057a90.js.map")
+    
+    @app.route("/workbox-config.js")
+    def workbox_config():
+        return send_from_directory(app.static_folder, "workbox-config.js")
 
     @app.route("/sw.js.map")
     def map():

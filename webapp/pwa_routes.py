@@ -14,4 +14,7 @@ def manifest():
 def service_worker():
     return send_from_directory("/home/azfar/Workout-Log", "sw.js")
 
-
+# Intiates Main.Py 
+@pwa_bp.route("/main.py")
+def main():
+    return send_from_directory("/home/azfar/Workout-Log", "main.py")
