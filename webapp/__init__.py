@@ -46,6 +46,26 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
     
+    #intiates PWA routes
+    # Intiates workbox file routes
+    @app.route("/workbox-ec057a90.js")
+    def workbox():
+        return send_from_directory(app.static_folder, "workbox-ec057a90.js")
+
+    @app.route("/sw.js.map")
+    def map():
+        return send_from_directory(app.static_folder, "sw.js.map")
+
+    # Add logo routes
+    @app.route("/static/manifest-icon-192.maskable.png")
+    def icon192():
+        return send_from_directory(app.static_folder, "manifest-icon-192.maskable.png")
+
+    @app.route("/static/manifest-icon-512.maskable.png")
+    def icon512():
+        return send_from_directory(app.static_folder, "manifest-icon-512.maskable.png")
+
+    
     return app
 
 
