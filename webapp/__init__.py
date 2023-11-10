@@ -10,8 +10,8 @@ db = SQLAlchemy()
 DB_NAME = "data.db"
 
 def create_app():
-    # Creates App
-    app = Flask(__name__)
+    # Creates App with Static Files Directory
+    app = Flask(__name__, static_url_path="/webapp/static")
     app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
 
     # Registers Blueprints

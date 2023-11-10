@@ -14,7 +14,7 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{{ url_for('pwa.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
   </head>
   <body>
     <nav
@@ -23,7 +23,7 @@
     >
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
-          <img src="{{ url_for('pwa.icon') }}" wdith="50" height="44" alt="Workout Icon">
+          <img src="{{ url_for('static', filename='icon.png') }}" wdith="50" height="44" alt="Workout Icon">
         </a>
         <button
           class="navbar-toggler"
@@ -94,14 +94,20 @@
     ></script>
     <!-- Registers Service Worker for Offline Page-->
     <script>
-      window.addEventListener("load", () => {
-        if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("sw.js");
-        }
-      });
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registered: ', registration);
+        })
+        .catch(error => {
+          console.log('ServiceWorker registration failed: ', error);
+        });
+    });
+  }
     </script>
     <!--References Script file-->
-    <script src="{{ url_for('pwa.app_js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
   </body>
 </html>
  
