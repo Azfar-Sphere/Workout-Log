@@ -24,3 +24,8 @@ def static_path(filename):
     directory = os.path.join(os.getcwd(), "webapp/templates/static")
     return send_from_directory(directory, filename)
 
+@pwa_bp.route("/webapp/__pycache__/<filename>")
+def pycache_path(filename):
+    directory = os.path.join(os.getcwd(), "webapp/__pycache__")
+    return send_from_directory(directory, filename)
+
