@@ -8,17 +8,17 @@ pwa_bp = Blueprint("pwa", __name__)
 # Intitaties Manifest Route
 @pwa_bp.route("/manifest.json")
 def manifest():
-    directory = os.path.join(os.getcwd(), "webapp/manifest.json")
+    directory = os.path.join(os.getcwd(), "webapp")
     return send_from_directory(directory, "manifest.json")
 
 # Intiates service-worker route
 @pwa_bp.route("/sw.js")
 def service_worker():
-    directory = os.path.join(os.getcwd(), "sw.js")
+    directory = os.path.join(os.getcwd())
     return send_from_directory(directory, "sw.js")
 
 # Intiates Main.Py 
 @pwa_bp.route("/main.py")
 def main():
-    directory = os.path.join(os.getcwd(), "main.py")
+    directory = os.path.join(os.getcwd())
     return send_from_directory(directory, "main.py")
