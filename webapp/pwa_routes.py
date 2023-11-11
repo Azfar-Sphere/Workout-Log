@@ -19,7 +19,9 @@ def templates_path(filename):
     directory = os.path.join(os.getcwd(), "webapp/templates")
     return send_from_directory(directory, filename)
 
-@pwa_bp.route('/static/<path:filename>')
+@pwa_bp.route('/webapp/templates/static/<path:filename>')
 def static_path(filename):
-    directory = os.path.join(os.getcwd(), "webapp/static")
+    directory = os.path.join(os.getcwd(), "webapp/templates/static")
+    print("Directory:", directory)
+    print("Filename:", filename)
     return send_from_directory(directory, filename)
