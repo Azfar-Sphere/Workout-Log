@@ -1,3 +1,5 @@
+import { precacheAndRoute } from 'workbox-precaching';
+
 module.exports = {
 	globDirectory: '/home/azfar/Workout-Log',
 	globPatterns: [

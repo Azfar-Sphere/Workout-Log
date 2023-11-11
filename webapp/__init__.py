@@ -73,6 +73,11 @@ def create_app():
     def icon512():
         return send_from_directory(app.static_folder, "manifest-icon-512.maskable.png")
 
+    # Routes for Caching
+    # @app.route('/webapp/<path:filename>')
+    # def webapp(filename):
+    # return send_from_directory("/webapp", f"{filename}" )
+
     
     return app
 
