@@ -3,22 +3,23 @@ import os
 
 pwa_bp = Blueprint("pwa", __name__)
 
-# Sets PWA Config (Service-worker and manifest file)
+# Sets routes for all
+@pwa_bp.route('/<path:filename>')
+def root_path(filename):
+    directory = os.path.join(os.getcwd())
+    return send_from_directory(directory, filename)
 
-# Intitaties Manifest Route
-@pwa_bp.route("/manifest.json")
-def manifest():
+@pwa_bp.route('/webapp/<path:filename>')
+def webapp_path(filename):
     directory = os.path.join(os.getcwd(), "webapp")
-    return send_from_directory(directory, "manifest.json")
+    return send_from_directory(directory, filename)
 
-# Intiates service-worker route
-@pwa_bp.route("/sw.js")
-def service_worker():
-    directory = os.path.join(os.getcwd())
-    return send_from_directory(directory, "sw.js")
+@pwa_bp.route('/webapp/templates/<path:filename>')
+def templates_path(filename):
+    directory = os.path.join(os.getcwd(), "webapp/templates")
+    return send_from_directory(directory, filename)
 
-# Intiates Main.Py 
-@pwa_bp.route("/main.py")
-def main():
-    directory = os.path.join(os.getcwd())
-    return send_from_directory(directory, "main.py")
+@pwa_bp.route('/static/<path:filename>')
+def static_path(filename):
+    directory = os.path.join(os.getcwd(), "webapp/static")
+    return send_from_directory(directory, filename)
