@@ -1,20 +1,19 @@
-import { precacheAndRoute, matchPrecache } from 'workbox-precaching';
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute, NavigationRoute } from 'workbox-routing';
 
-// Precache your assets
 precacheAndRoute(self.__WB_MANIFEST);
 
-// Implement the fetch event to serve from cache first
-self.addEventListener('fetch', (event) => {
-  // Respond with cached content if available
-  const cachedResponse = matchPrecache(event.request);
-  event.respondWith(
-    cachedResponse || fetch(event.request).catch(() => {
-      // Fallback to an offline page if the request can't be fulfilled
-      return caches.match('webapp/templates/offline.html');
-    })
-  );
+const FALLBACK_PAGE = 'webapp/templates/offline.html';
+
+const navigationRoute = new NavigationRoute(({ event }) => {
+  return (async () => {
+    try {
+      return await fetch(event.request);
+    } catch (error) {
+      const cache = await caches.open('workbox-precache');
+      return cache.match(FALLBACK_PAGE);
+    }
+  })();
 });
 
-
-
-
+registerRoute(navigationRoute);
