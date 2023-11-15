@@ -29,3 +29,7 @@ def pycache_path(filename):
     directory = os.path.join(os.getcwd(), "webapp/__pycache__")
     return send_from_directory(directory, filename)
 
+@pwa_bp.route("/workout/webapp/<filename>")
+def workout_webapp_path(filename):
+    directory = os.path.join(os.getcwd(), "webapp")
+    return send_from_directory(directory, filename)

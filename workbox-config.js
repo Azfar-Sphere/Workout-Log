@@ -1,8 +1,11 @@
 module.exports = {
-	globDirectory: '/home/azfar/Workout-Log',
+	globDirectory: 'webapp/',
 	globPatterns: [
-		'**/*.{py,json,md,js,pyc,db,html,png,css}'
+		'**/*.{py,pyc,db,html,js,png,css,pdf,doc,docx,txt}'
 	],
-	swDest: '/home/azfar/Workout-Log/sw.js',
-	swSrc: 'src-sw.js',
+	swDest: 'webapp/sw.js',
+	ignoreURLParametersMatching: [
+		/^utm_/,
+		/^fbclid$/
+	]
 };
