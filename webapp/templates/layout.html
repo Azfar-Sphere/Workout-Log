@@ -92,20 +92,6 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-    <!-- Registers Service Worker for Offline Page-->
-    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('webapp/sw.js')
-        .then(registration => {
-          console.log('ServiceWorker registered: ', registration);
-        })
-        .catch(error => {
-          console.log('ServiceWorker registration failed: ', error);
-        });
-    });
-  }
-    </script>
     <!--References Script file-->
     <script src="{{ url_for('static', filename='app.js') }}"></script>
   </body>
