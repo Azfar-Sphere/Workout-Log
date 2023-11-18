@@ -2,6 +2,7 @@ from flask import render_template, Blueprint, request, url_for, redirect
 from flask_login import login_required, current_user
 from .tables import Workout, Exercise
 from . import db
+from sqlalchemy.sql import text
 
 routes = Blueprint("routes", __name__)
 
@@ -26,6 +27,7 @@ def error():
 #Defines Each Workout Route
 @routes.route("/workout/<int:id>")
 @login_required
+# id is Workout ID
 def workout(id):
     user = db.session.query(Workout.user_id).filter_by(id = id).scalar()
 
@@ -42,6 +44,7 @@ def workout(id):
 
 @routes.route("/delete_w/<int:id>")
 @login_required
+#id is Workout ID
 def deleteWorkout(id):
     workout = Workout.query.get(id)
 
@@ -68,31 +71,49 @@ def deleteWorkout(id):
     return redirect(url_for("routes.index"))
 
 
-@routes.route("/newworkout", methods=["POST"])
+@routes.route("/newexercise", methods=["POST"])
 @login_required
-def newWorkout():
+def newExercise():
+    # Checks for new excerise entry
     if request.method == "POST":
         exercise = request.form.get("e_name")
         sets = request.form.get("sets")
         weight = request.form.get("weight")
         userId = request.form.get("user")
-        workoutId = request.form.get("workoutId")
+        workout_id = request.form.get("workoutId")
 
+        #Checks if User is Valid user
         if int(userId) != current_user.id:
             return redirect(url_for("routes.error"))
         
+        #Checks if user entered weight, otherwise default is bodyweight
         if not weight:
             weight = "Bodyweight"
-    
-        new_exercise = Exercise(name = exercise, sets = sets, weight = weight, workout_id = workoutId)
-        db.session.add(new_exercise)
+        
+        #Checks if exercise already exists previously in the workout, concatonates new sets and weight if it does
+        if db.session.query(Exercise).filter_by(workout_id = workout_id, name = exercise).first():
+            db.session.execute(
+                text(
+                    "UPDATE exercise SET sets = sets || ', ' || :sets, weight = weight || ', ' || :weight "
+                    "WHERE workout_id = :workout_id AND name = :exercise"
+                ),
+                {"sets": sets, "weight": weight, "workout_id": workout_id, "exercise": exercise},
+            )
+
+        #Else adds new exercise
+        else:
+            new_exercise = Exercise(name = exercise, sets = sets, weight = weight, workout_id = workout_id)
+            db.session.add(new_exercise)
+        
+        #Commits Changes
         db.session.commit()
 
-    return redirect(url_for("routes.workout", id = workoutId))
+    return redirect(url_for("routes.workout", id = workout_id))
 
 @routes.route("/delete_e/<int:id>")
 @login_required
-def deleteExerciset(id):
+#id is Exercise ID
+def deleteExercise(id):
     workoutId = db.session.query(Exercise.workout_id).filter_by(id = id).scalar()
     user = db.session.query(Workout.user_id).filter_by(id = workoutId).scalar()
 
