@@ -77,6 +77,7 @@ def newExercise():
     # Checks for new excerise entry
     if request.method == "POST":
         exercise = request.form.get("e_name")
+        exercise = exercise.capitalize()
         sets = request.form.get("sets")
         weight = request.form.get("weight")
         userId = request.form.get("user")
