@@ -3,7 +3,24 @@
 
 {% block main %}
 <h1 style="text-align: center;">Weekly Routine</h1>
-    
 
-
+<div class="text-center d-flex justify-content-center">
+    <form>
+        <label>Select a day</label>
+        <br>
+        <select id="day" name="day">
+            <option value="sunday">Sunday</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tueday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+        </select>
+        <br> <br>
+        <button class="btn btn-primary mx-auto" id="set-submit" type="submit">
+            Add day
+        </button>
+    </form>
+</div>
 {% endblock %}

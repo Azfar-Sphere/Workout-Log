@@ -18,7 +18,7 @@ class Workout(db.Model):
 
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    day = db.Column(db.string(150), nullable=False)
+    day = db.Column(db.String(150), nullable=False)
     name = db.Column(db.String(150), nullable = False,)
     sets = db.Column(db.String(150), nullable = False)
     weight = db.Column(db.String(150), default = "Bodyweight")
