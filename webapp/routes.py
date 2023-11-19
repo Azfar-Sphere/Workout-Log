@@ -130,3 +130,7 @@ def deleteExercise(id):
 
     return redirect(url_for("routes.workout", id = workoutId))
 
+@routes.route("/routine")
+@login_required
+def routine():
+    return render_template("routine.html")

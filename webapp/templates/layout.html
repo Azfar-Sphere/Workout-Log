@@ -46,6 +46,7 @@
               >Home</a
             >
             <a class="nav-link" href="{{ url_for('auth.logout') }}">logout</a>
+            <a class="nav-link" href="{{ url_for('routes.routine') }}">Weekly Routine</a>
             {% else %}
             <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
             <a class="nav-link" href="{{ url_for('auth.register') }}"
