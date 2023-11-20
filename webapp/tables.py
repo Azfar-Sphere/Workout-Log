@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
+
 class Workout(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.DateTime(timezone=True), default = func.now())
@@ -18,12 +19,17 @@ class Workout(db.Model):
 
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    day = db.Column(db.String(150), nullable=False)
     name = db.Column(db.String(150), nullable = False,)
     sets = db.Column(db.String(150), nullable = False)
     weight = db.Column(db.String(150), default = "Bodyweight")
     workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'))
 
+class Routine(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    day = db.Column(db.String(12), nullable = False)
+    exercise = db.Column(db.String(12), nullable = False)
+    day = db.Column(db.String(12), nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 # Creates individual workout numbers for each User 
 @event.listens_for(Workout, 'before_insert')
