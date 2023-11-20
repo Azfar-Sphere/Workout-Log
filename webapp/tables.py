@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func, select
 from sqlalchemy.orm import column_property
 from flask_login import current_user
-from sqlalchemy import event
+from sqlalchemy import event, case
 
 # Creates all Tables
 class User(db.Model, UserMixin):
@@ -38,3 +38,17 @@ def update_workout_number(mapper, connection, target):
         target.workout_number = 1
     else:
         target.workout_number = max_workout_number + 1
+
+#Orders the days in the Routine table
+days_order = case(
+[
+    (Routine.day == 'Saturday', 1),
+    (Routine.day == 'Sunday', 2),
+    (Routine.day == 'Monday', 3),
+    (Routine.day == 'Tuesday', 4),
+    (Routine.day == 'Wednesday', 5),
+    (Routine.day == 'Thursday', 6),
+    (Routine.day == 'Friday', 7),
+],
+else_=8  # Put any other days at the end
+)
