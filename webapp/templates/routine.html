@@ -26,5 +26,25 @@
     </form>
 </div>
 
+{% for day in days %}
+
+<table>
+    <div class="container-fluid text-sm-center">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">{{ day }}</th>
+                {% for exercise in exercises %}
+                    {% if exercise.day == day %}
+                        <th scope="col"> {{ exercise.exercise }}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+        </table>
+    </div>
+</table>
+
+{% endfor %}
 
 {% endblock %}

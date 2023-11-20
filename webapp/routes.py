@@ -136,6 +136,7 @@ def routine():
 
     if request.method == "POST":
         day = request.form.get("day")
+        day = day.capitalize()
         exercise = request.form.get("exercise")
         exercise = exercise.title()
 
@@ -148,4 +149,8 @@ def routine():
             db.session.commit()
 
     days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
-    return render_template("routine.html")
+    days = [day[0] for day in days]
+
+    exercises = db.session.query(Routine).filter_by(user_id = current_user.id).all()
+
+    return render_template("routine.html", days = days, exercises = exercises)

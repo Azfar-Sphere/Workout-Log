@@ -39,9 +39,8 @@ def update_workout_number(mapper, connection, target):
     else:
         target.workout_number = max_workout_number + 1
 
-#Orders the days in the Routine table
+# Orders the days in the Routine table
 days_order = case(
-[
     (Routine.day == 'Saturday', 1),
     (Routine.day == 'Sunday', 2),
     (Routine.day == 'Monday', 3),
@@ -49,6 +48,5 @@ days_order = case(
     (Routine.day == 'Wednesday', 5),
     (Routine.day == 'Thursday', 6),
     (Routine.day == 'Friday', 7),
-],
-else_=8  # Put any other days at the end
+    else_=8
 )
