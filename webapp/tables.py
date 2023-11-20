@@ -28,7 +28,6 @@ class Routine(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     day = db.Column(db.String(12), nullable = False)
     exercise = db.Column(db.String(12), nullable = False)
-    day = db.Column(db.String(12), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 # Creates individual workout numbers for each User 

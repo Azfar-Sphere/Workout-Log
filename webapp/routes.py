@@ -1,6 +1,6 @@
-from flask import render_template, Blueprint, request, url_for, redirect
+from flask import render_template, Blueprint, request, url_for, redirect, flash
 from flask_login import login_required, current_user
-from .tables import Workout, Exercise
+from .tables import Workout, Exercise, Routine
 from . import db
 from sqlalchemy.sql import text
 
@@ -130,7 +130,21 @@ def deleteExercise(id):
 
     return redirect(url_for("routes.workout", id = workoutId))
 
-@routes.route("/routine")
+@routes.route("/routine", methods=["POST", "GET"])
 @login_required
 def routine():
+    
+    if request.method == "POST":
+        day = request.form.get("day")
+        exercise = request.form.get("exercise")
+        exercise = exercise.capitalize()
+
+        if db.session.query(Routine).filter_by(day = day, exercise = exercise, user_id = current_user.id):
+            flash("Exercise Already Exists For this Day!", category='error')
+
+        else:
+            new_exercise = Routine(day = day, exercise = exercise, user_id = current_user.id)
+            db.session.add(new_exercise)
+            db.session.commit()
+
     return render_template("routine.html")
