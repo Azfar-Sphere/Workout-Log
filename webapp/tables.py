@@ -5,7 +5,7 @@ from sqlalchemy.orm import column_property
 from flask_login import current_user
 from sqlalchemy import event
 
-# Creats user, workout and exercise tables
+# Creates all Tables
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)

@@ -6,9 +6,9 @@
 
 <div class="text-center d-flex justify-content-center">
     <form>
-        <label>Select a day</label>
         <br>
-        <select id="day" name="day">
+        <div class="form-floating">
+        <select class="form-select" id="day" name="day">
             <option value="sunday">Sunday</option>
             <option value="monday">Monday</option>
             <option value="tuesday">Tueday</option>
@@ -17,10 +17,12 @@
             <option value="friday">Friday</option>
             <option value="saturday">Saturday</option>
         </select>
-        <br> <br>
-        <button class="btn btn-primary mx-auto" id="set-submit" type="submit">
-            Add day
-        </button>
+        <label for="day">Select a day</label>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="exercise" id="exercise" placeholder="Enter Exercise to Add">
+            <button class="btn btn-primary mx-auto" id="set-submit" type="submit">Add Exercise</button>
+        </div>
     </form>
 </div>
 {% endblock %}
