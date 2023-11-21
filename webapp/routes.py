@@ -102,13 +102,12 @@ def deleteWorkout(id):
     return redirect(url_for("routes.index"))
 
 
-@routes.route("/newexercise", methods=["POST"])
+@routes.route("/addsets", methods=["POST"])
 @login_required
-def newExercise():
+def addSets():
     # Checks for new excerise entry
     if request.method == "POST":
         exercise = request.form.get("e_name")
-        exercise = exercise.capitalize()
         sets = request.form.get("sets")
         weight = request.form.get("weight")
         userId = request.form.get("user")
@@ -123,7 +122,7 @@ def newExercise():
             weight = "Bodyweight"
         
         #Checks if exercise already exists previously in the workout, concatonates new sets and weight if it does
-        if db.session.query(Exercise).filter_by(workout_id = workout_id, name = exercise).first():
+        if db.session.query(Exercise.sets).filter_by(workout_id = workout_id, name = exercise).scalar() is not None:
             db.session.execute(
                 text(
                     "UPDATE exercise SET sets = sets || ', ' || :sets, weight = weight || ', ' || :weight "
@@ -134,8 +133,13 @@ def newExercise():
 
         #Else adds new exercise
         else:
-            new_exercise = Exercise(name = exercise, sets = sets, weight = weight, workout_id = workout_id)
-            db.session.add(new_exercise)
+            db.session.execute(
+                text(
+                    "UPDATE exercise SET sets = :sets, weight = :weight "
+                    "WHERE workout_id = :workout_id and name =:exercise"
+                ),
+                {"sets": sets, "weight": weight, "workout_id": workout_id, "exercise": exercise},
+            )
         
         #Commits Changes
         db.session.commit()

@@ -28,44 +28,33 @@ Workout For {{ workout_day }}
         <td>{{ exercise.sets }}</td>
         <td>{{ exercise.weight }}</td>
         <td>
-          <a href="/delete_e/{{ exercise.id }}" class="btn btn-danger"
-            >Delete Exercise</a
-          >
+          <form class="form" action="/addsets" method="post">
+            <input type="hidden" name="user" value="{{ user }}" />
+            <input type="hidden" name="workoutId" value="{{ workoutId }}" />
+            <input type="hidden" name="e_name" value="{{ exercise.name }}" />
+            <input
+              class="form-control mx-auto w-auto"
+              id="sets"
+              name="sets"
+              type="text"
+              placeholder="Reps Per Set"
+            />
+            <input
+              class="form-control mx-auto w-auto"
+              id="weight "
+              name="weight"
+              type="text"
+              placeholder="Weight Per Set"
+            />
+            <br />
+            <button class="btn btn-primary mx-auto" id="set-submit" type="submit">
+              Add Sets
+            </button>
+          </form>
         </td>
       </tr>
       {% endfor %}
     </table>
-  </div>
-  <div class="text-center d-flex justify-content-center">
-    <form class="form" action="/newexercise" method="post">
-      <input type="hidden" name="user" value="{{ user }}" />
-      <input type="hidden" name="workoutId" value="{{ workoutId }}" />
-      <input
-        class="form-control mx-auto w-auto"
-        id="e_name"
-        name="e_name"
-        type="text"
-        placeholder="Exercise"
-      />
-      <input
-        class="form-control mx-auto w-auto"
-        id="sets"
-        name="sets"
-        type="text"
-        placeholder="Reps Per Set"
-      />
-      <input
-        class="form-control mx-auto w-auto"
-        id="weight "
-        name="weight"
-        type="text"
-        placeholder="Weight Per Set"
-      />
-      <br />
-      <button class="btn btn-primary mx-auto" id="set-submit" type="submit">
-        Add Exercise
-      </button>
-    </form>
   </div>
 </div>
 

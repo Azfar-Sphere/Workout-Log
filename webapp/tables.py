@@ -21,8 +21,8 @@ class Workout(db.Model):
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(150), nullable = False,)
-    sets = db.Column(db.String(150), nullable = True)
-    weight = db.Column(db.String(150), default = "Bodyweight")
+    sets = db.Column(db.String(150))
+    weight = db.Column(db.String(150))
     workout_id = db.Column(db.Integer, db.ForeignKey('workout.id'))
 
 class Routine(db.Model):
