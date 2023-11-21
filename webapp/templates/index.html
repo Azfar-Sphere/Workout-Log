@@ -16,16 +16,13 @@ Index
         </thead>
         {% for day in days %}
         <tr>
-            <th scope="col">{{ day }}</th>
-            <td><button class="btn btn-primary>" href="/newworkout">Workout</button></td>
+            <td scope="col">{{ day }}</td>
+            <form action="/newworkout" method="post">
+                <td><button class="btn btn-primary" type="submit">Workout for {{ day }}</button></td>
+                <input type="hidden" name="day" value="{{ day }}" />
+            </form>
         </tr>
         {% endfor %}
     </table>
-    <br>
-    <div class="container text-center">
-        <form action="/" method="post">
-            <button class="btn btn-primary" type="submit" >Add Workout</button>
-        </form>
-    </div>
 </div>
 {% endblock %}

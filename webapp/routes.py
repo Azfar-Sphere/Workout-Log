@@ -18,7 +18,10 @@ def index():
 
     days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
     days = [day[0] for day in days]
-    return render_template("index.html", days = days)
+
+    workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
+
+    return render_template("index.html", days = days, workouts = workouts)
 
 #Defines Error Route
 @routes.route("/error")
@@ -42,6 +45,21 @@ def workout(id):
     exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
     return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises, user = user, workoutId = id)
 
+@routes.route("/newworkout", methods=["POST", "GET"])
+@login_required
+def newWorkout():
+    day = request.form.get("day")
+
+    if request.method == "POST":
+
+        new_workout = Workout(day = day, user_id = current_user.id)
+        db.session.add(new_workout)
+        db.session.commit()
+
+    id = db.session.query(Workout.id).filter_by(day = day, user_id = current_user.id).first()
+    id = int(id[0]) if id is not None else None
+
+    return redirect(url_for("routes.workout", id = id))
 
 @routes.route("/delete_w/<int:id>")
 @login_required
