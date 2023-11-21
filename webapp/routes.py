@@ -23,7 +23,7 @@ def index():
 
     return render_template("index.html", days = days, workouts = workouts)
 
-@routes.route("/newworkout", methods=["POST", "GET"])
+@routes.route("/dayworkout", methods=["POST", "GET"])
 @login_required
 def newWorkout():
     day = request.form.get("day")
@@ -50,17 +50,28 @@ def newWorkout():
 @login_required
 # id is Workout ID
 def workout(id):
-    user = db.session.query(Workout.user_id).filter_by(id = id).scalar()
+    workout_id = id
+    user = db.session.query(Workout.user_id).filter_by(id = workout_id).scalar()
 
     if user is None:
         return redirect(url_for("routes.error"))
     elif user != current_user.id:
         return redirect(url_for("routes.error"))
 
-    workout_day = db.session.query(Workout.day).filter_by(id = id).scalar();
+    workout_day = db.session.query(Workout.day).filter_by(id = workout_id).scalar()
+    exercises = db.session.query(Routine.exercise).filter_by(day = workout_day, user_id = current_user.id).all()
+    exercises = [exercise[0] for exercise in exercises]
 
-    exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
-    return render_template("workout.html", workout_day = workout_day, exercises = exercises, user = user, workoutId = id)
+    for exercise in exercises:
+        if db.session.query(Exercise).filter_by(name = exercise, workout_id = workout_id).scalar() is None:
+            new_exercise = Exercise(name = exercise, workout_id = workout_id)
+            db.session.add(new_exercise)
+
+    db.session.commit()
+
+    exercises = db.session.query(Exercise).filter_by(workout_id = workout_id).all()
+
+    return render_template("workout.html", workout_day = workout_day, exercises = exercises, user = user, workoutId = workout_id)
 
 @routes.route("/delete_w/<int:id>")
 @login_required

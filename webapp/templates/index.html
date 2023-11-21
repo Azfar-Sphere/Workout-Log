@@ -17,7 +17,7 @@ Index
         {% for day in days %}
         <tr>
             <td scope="col">{{ day }}</td>
-            <form action="/newworkout" method="post">
+            <form action="/dayworkout" method="post">
                 <td><button class="btn btn-primary" type="submit">Workout for {{ day }}</button></td>
                 <input type="hidden" name="day" value="{{ day }}" />
             </form>
