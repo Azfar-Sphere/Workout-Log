@@ -40,10 +40,10 @@ def workout(id):
     elif user != current_user.id:
         return redirect(url_for("routes.error"))
 
-    workoutNumber = db.session.query(Workout.workout_number).filter_by(id = id).scalar();
+    workout_day = db.session.query(Workout.day).filter_by(id = id).scalar();
 
     exercises = db.session.query(Exercise).filter_by(workout_id = id).all()
-    return render_template("workout.html", workoutNumber = workoutNumber, exercises = exercises, user = user, workoutId = id)
+    return render_template("workout.html", workout_day = workout_day, exercises = exercises, user = user, workoutId = id)
 
 @routes.route("/newworkout", methods=["POST", "GET"])
 @login_required
