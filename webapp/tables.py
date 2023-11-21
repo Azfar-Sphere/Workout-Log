@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
 class Workout(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.DateTime(timezone=True), default = func.now())
+    # day = db.Column(db.String(12), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     workout_number = db.Column(db.Integer, nullable=False, unique=False)
 

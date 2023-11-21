@@ -14,12 +14,10 @@ Index
                 <th scope="col">Workout Details</th>
             </tr>
         </thead>
-        {% for workout in workouts %}
+        {% for day in days %}
         <tr>
-            <th scope="row">{{ workout.workout_number}}</th>
-            <td>{{ workout.date }}</td>
-            <td><a href="/workout/{{ workout.id }}" class="btn btn-outline-success">Add To Workout</a></td>
-            <td><a href="/delete_w/{{ workout.id }}" class="btn btn-danger">Delete Workout</a></td>
+            <th scope="col">{{ day }}</th>
+            <td><button class="btn btn-primary>" href="/newworkout">Workout</button></td>
         </tr>
         {% endfor %}
     </table>

@@ -16,8 +16,9 @@ def index():
         db.session.add(new_workout)
         db.session.commit()
 
-    workouts = db.session.query(Workout).filter_by(user_id = current_user.id).order_by(Workout.date).all()
-    return render_template("index.html", workouts=workouts)
+    days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
+    days = [day[0] for day in days]
+    return render_template("index.html", days = days)
 
 #Defines Error Route
 @routes.route("/error")
