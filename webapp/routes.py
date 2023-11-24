@@ -175,7 +175,10 @@ def routine():
         exercise = request.form.get("exercise")
         exercise = exercise.title()
 
-        if db.session.query(Routine).filter_by(day = day, exercise = exercise, user_id = current_user.id).first():
+        if not exercise:
+            flash("Please Enter Exercise!", category='error')
+        
+        elif db.session.query(Routine).filter_by(day = day, exercise = exercise, user_id = current_user.id).first():
             flash("Exercise Already Exists For this Day!", category='error')
 
         else:
