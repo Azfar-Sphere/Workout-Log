@@ -189,6 +189,15 @@ def routine():
 
     return render_template("routine.html", days = days, exercises = exercises)
 
+@routes.route("/archive")
+@login_required
+def archive():
+    workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
+    
+    return render_template("archive.html", workouts = workouts)
+
+
+
 #Defines Error Route
 @routes.route("/error")
 def error():

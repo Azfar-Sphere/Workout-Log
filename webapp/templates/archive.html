@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Archive
+{% endblock %}
+
+{% block main %}
+<div class="containter-fluid fs-6">
+    <table class="table text-sm-center">
+        <thead>
+            <tr>
+                <th scope="col">Workout</th>
+                <th scope="col">Date</th>
+                <th scope="col">Workout Details</th>
+            </tr>
+        </thead>
+        {% for workout in workouts %}
+        <tr>
+            <td>{{ workout.day }}</td> 
+            <td>{{ workout.date }}</td>
+            <td><a href="workout/{{ workout.id }}">Goto workout</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
