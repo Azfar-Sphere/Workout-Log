@@ -20,12 +20,12 @@
         <label for="day">Select a day</label>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" name="exercise" id="exercise" placeholder="Enter Exercise to Add">
+            <input type="text" autocomplete="off" class="form-control" name="exercise" id="exercise" placeholder="Enter Exercise to Add">
             <button class="btn btn-primary mx-auto" id="set-submit" type="submit">Add Exercise</button>
         </div>
     </form>
 </div>
-
+x
 {% for day in days %}
 
 <table>
@@ -36,7 +36,7 @@
                 <th scope="col">{{ day }}</th>
                 {% for exercise in exercises %}
                     {% if exercise.day == day %}
-                        <th scope="col"> {{ exercise.exercise }}</th>
+                        <th scope="col"><a href="delete_e/{{ day }}/{{ exercise.exercise }}">{{ exercise.exercise }}</a></th>
                     {% endif %}
                 {% endfor %}
             </tr>

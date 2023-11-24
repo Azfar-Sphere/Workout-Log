@@ -146,24 +146,20 @@ def addSets():
 
     return redirect(url_for("routes.workout", id = workout_id))
 
-@routes.route("/delete_e/<int:id>")
+@routes.route("/delete_e/<string:day>/<string:exercise>")
 @login_required
 #id is Exercise ID
-def deleteExercise(id):
-    workoutId = db.session.query(Exercise.workout_id).filter_by(id = id).scalar()
-    user = db.session.query(Workout.user_id).filter_by(id = workoutId).scalar()
+def deleteExercise(day, exercise):
+    exercise_to_delete = db.session.query(Routine).filter_by(day = day, exercise = exercise, user_id = current_user.id).first()
 
-    if user is None:
-        return redirect(url_for("routes.error"))
-    elif user != current_user.id:
-        return redirect(url_for("routes.error"))
-    
-    exercise = db.session.query(Exercise).filter_by(id = id).first()
-    if exercise:
-        db.session.delete(exercise)
+    if exercise_to_delete:
+        db.session.delete(exercise_to_delete)
         db.session.commit()
 
-    return redirect(url_for("routes.workout", id = workoutId))
+    else:
+        flash("Error Deleting Exercise", category='error')
+
+    return redirect(url_for("routes.routine"))
 
 @routes.route("/routine", methods=["POST", "GET"])
 @login_required
