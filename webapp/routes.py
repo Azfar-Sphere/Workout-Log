@@ -99,7 +99,7 @@ def deleteWorkout(id):
     
     db.session.commit()
 
-    return redirect(url_for("routes.index"))
+    return redirect(url_for("routes.archive"))
 
 
 @routes.route("/addsets", methods=["POST"])
@@ -193,7 +193,7 @@ def routine():
 @login_required
 def archive():
     workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
-    
+
     return render_template("archive.html", workouts = workouts)
 
 
