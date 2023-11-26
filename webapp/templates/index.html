@@ -25,4 +25,29 @@ Index
         {% endfor %}
     </table>
 </div>
+<div class="container-fluid fs-6 text-sm-center">
+    <form>
+        <input type="hidden" id="week" name="week" value="1"/>
+        <h3 id="weekLabel">Week 1</h3>
+        <br>
+        <button id="weekButton" class="btn btn-info">Next Week</button>
+    </form>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    let weekButton = document.getElementById("weekButton");
+    let weekInput = document.getElementById("week");
+    let weekValue = parseInt(weekInput.value);
+
+    // Increments Week
+    weekButton.addEventListener("click", () => {
+        weekValue++;
+        weekInput.setAttribute("value", weekValue);
+
+        let week = document.getElementById("weekLabel");
+        week.innerText = "Week " + weekValue;
+    });
+});
+</script>
 {% endblock %}
