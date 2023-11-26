@@ -12,15 +12,13 @@ Archive
                 <th scope="col">Workout</th>
                 <th scope="col">Date</th>
                 <th scope="col">Workout Details</th>
-                <th scope="col">Actions</th>
             </tr>
         </thead>
         {% for workout in workouts %}
         <tr>
             <td>{{ workout.day }}</td> 
             <td>{{ workout.date }}</td>
-            <td><a href="workout/{{ workout.id }}"><button class="btn btn-success">Goto Workout</button></a></td>
-            <td><a href="delete_w/{{ workout.id }}"><button class="btn btn-danger">Delete Workout</button></a></td>
+            <td><a href="workout/{{ workout.id }}"><button class="btn btn-success">Goto Workout</button></a></td>       
         </tr>
         {% endfor %}
     </table>
