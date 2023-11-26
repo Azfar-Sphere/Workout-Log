@@ -199,7 +199,17 @@ def archive():
 
     return render_template("archive.html", workouts = workouts)
 
+@routes.route("/incrementweek", methods=["POST", "GET"])
+@login_required
+def increment_week():
+    if request.method == "POST":    
+        user = db.session.query(User).filter_by(id = current_user.id).first()
+        new_week = int(user.week) + 1;
 
+        user.week = new_week
+        db.session.commit()
+
+    return redirect(url_for("routes.index"))
 
 #Defines Error Route
 @routes.route("/error")

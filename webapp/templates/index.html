@@ -26,11 +26,11 @@ Index
     </table>
 </div>
 <div class="container-fluid fs-6 text-sm-center">
-    <form>
+    <form action="/incrementweek" method="post">
         <input type="hidden" id="week" name="week" value="{{ week }}"/>
         <h3 id="weekLabel">Week {{ week }}</h3>
         <br>
-        <button id="weekButton" class="btn btn-info">Next Week</button>
+        <button id="weekButton" class="btn btn-info" type="submit">Next Week</button>
     </form>
 </div>
 
