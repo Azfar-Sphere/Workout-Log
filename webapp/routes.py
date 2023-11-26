@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, request, url_for, redirect, flash
 from flask_login import login_required, current_user
-from .tables import Workout, Exercise, Routine, days_order
+from .tables import User, Workout, Exercise, Routine, days_order
 from . import db
 from sqlalchemy.sql import text, case
 
@@ -21,7 +21,10 @@ def index():
 
     workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
 
-    return render_template("index.html", days = days, workouts = workouts)
+    week = db.session.query(User.week).filter_by(id = current_user.id).first()
+    week = week[0]
+
+    return render_template("index.html", days = days, workouts = workouts, week=week)
 
 @routes.route("/dayworkout", methods=["POST", "GET"])
 @login_required

@@ -10,12 +10,14 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
+    week = db.Column(db.String(150), default=1)
+
 
 class Workout(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.DateTime(timezone=True), default = func.now())
     day = db.Column(db.String(12), nullable = False)
-    week = db.Column(db.String(12), nullable = False)
+    week = db.Column(db.String(150))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     workout_number = db.Column(db.Integer, nullable=False, unique=False)
 
