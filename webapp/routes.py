@@ -30,20 +30,21 @@ def index():
 @login_required
 def newWorkout():
     day = request.form.get("day")
+    week = request.form.get("week")
 
     if request.method == "POST":
 
-        if db.session.query(Workout).filter_by(day = day, user_id = current_user.id).scalar() is not None:
-            id = db.session.query(Workout.id).filter_by(day = day, user_id = current_user.id).first()
-            id = int(id[0]) if id is not None else None 
+        workout = db.session.query(Workout).filter_by(day = day, week = week, user_id = current_user.id).first()
 
+        if workout is not None:
+            id = workout.id
             return redirect(url_for("routes.workout", id = id))
 
-        new_workout = Workout(day = day, user_id = current_user.id)
+        new_workout = Workout(day = day, week = week, user_id = current_user.id)
         db.session.add(new_workout)
         db.session.commit()
 
-    id = db.session.query(Workout.id).filter_by(day = day, user_id = current_user.id).first()
+    id = db.session.query(Workout.id).filter_by(day = day, week = week, user_id = current_user.id).first()
     id = int(id[0]) if id is not None else None
 
     return redirect(url_for("routes.workout", id = id))

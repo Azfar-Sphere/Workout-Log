@@ -20,6 +20,7 @@ Index
             <form action="/dayworkout" method="post">
                 <td><button class="btn btn-primary" type="submit">Workout for {{ day }}</button></td>
                 <input type="hidden" name="day" value="{{ day }}" />
+                <input type="hidden" id="week" name="week" value="{{ week }}"/>
             </form>
         </tr>
         {% endfor %}
@@ -27,7 +28,6 @@ Index
 </div>
 <div class="container-fluid fs-6 text-sm-center">
     <form action="/incrementweek" method="post">
-        <input type="hidden" id="week" name="week" value="{{ week }}"/>
         <h3 id="weekLabel">Week {{ week }}</h3>
         <br>
         <button id="weekButton" class="btn btn-info" type="submit">Next Week</button>
