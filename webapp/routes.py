@@ -197,8 +197,10 @@ def routine():
 @login_required
 def archive():
     workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
+    weeks = db.session.query(Workout.week).filter_by(user_id = current_user.id).distinct().all()
+    weeks = [week[0] for week in weeks]
 
-    return render_template("archive.html", workouts = workouts)
+    return render_template("archive.html", workouts = workouts, weeks = weeks)
 
 @routes.route("/incrementweek", methods=["POST", "GET"])
 @login_required

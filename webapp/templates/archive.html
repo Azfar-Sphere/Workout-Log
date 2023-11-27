@@ -6,6 +6,8 @@ Archive
 
 {% block main %}
 <div class="containter-fluid fs-6">
+    {% for week in weeks %}
+    <h1>Week {{ week }}</h1>
     <table class="table text-sm-center">
         <thead>
             <tr>
@@ -14,13 +16,16 @@ Archive
                 <th scope="col">Workout Details</th>
             </tr>
         </thead>
-        {% for workout in workouts %}
+        {% for workout in workouts %}   
+        {% if workout.week  ==  week %}
         <tr>
             <td>{{ workout.day }}</td> 
             <td>{{ workout.date }}</td>
             <td><a href="workout/{{ workout.id }}"><button class="btn btn-success">Goto Workout</button></a></td>       
         </tr>
+        {% endif %}
         {% endfor %}
     </table>
+    {% endfor %}
 </div>
 {% endblock %}
