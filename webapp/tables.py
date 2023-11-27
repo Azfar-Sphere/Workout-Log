@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
 
 class Workout(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    date = db.Column(db.DateTime(timezone=True), default = func.now())
+    date = db.Column(db.String(10), default = func.current_date())
     day = db.Column(db.String(12), nullable = False)
     week = db.Column(db.String(150))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
