@@ -16,56 +16,71 @@ def index():
         db.session.add(new_workout)
         db.session.commit()
 
+    # Gets The Days From Routine
     days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
     days = [day[0] for day in days]
 
+    # Gets all the workouts for the user
     workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
 
+    # Gets the current weeks for the user
     week = db.session.query(User.week).filter_by(id = current_user.id).first()
     week = week[0]
 
     return render_template("index.html", days = days, workouts = workouts, week=week)
 
+# Defines the route when a new workout for a day is created
 @routes.route("/dayworkout", methods=["POST", "GET"])
 @login_required
 def newWorkout():
+    # Gets day and week from the form
     day = request.form.get("day")
     week = request.form.get("week")
 
     if request.method == "POST":
 
+        # Checks if workout exists already
         workout = db.session.query(Workout).filter_by(day = day, week = week, user_id = current_user.id).first()
 
+        # Case if it does exist, redirects
         if workout is not None:
             id = workout.id
             return redirect(url_for("routes.workout", id = id))
 
+        # Creates new workout if workout does not exist
         new_workout = Workout(day = day, week = week, user_id = current_user.id)
         db.session.add(new_workout)
         db.session.commit()
 
+    # Gets the workout id and redirects
     id = db.session.query(Workout.id).filter_by(day = day, week = week, user_id = current_user.id).first()
     id = int(id[0]) if id is not None else None
-
+ 
     return redirect(url_for("routes.workout", id = id))
 
 #Defines Each Workout Route
 @routes.route("/workout/<int:id>")
 @login_required
-# id is Workout ID
+# id variable is Workout ID
 def workout(id):
     workout_id = id
+    # Gets the user
     user = db.session.query(Workout.user_id).filter_by(id = workout_id).scalar()
 
+    # Validates User
     if user is None:
         return redirect(url_for("routes.error"))
     elif user != current_user.id:
         return redirect(url_for("routes.error"))
 
+    # Gets the workout day
     workout_day = db.session.query(Workout.day).filter_by(id = workout_id).scalar()
+
+    # Retrieves exercises for that day
     exercises = db.session.query(Routine.exercise).filter_by(day = workout_day, user_id = current_user.id).all()
     exercises = [exercise[0] for exercise in exercises]
 
+    # Assigns exercise to the workout if they aren't previously assigned
     for exercise in exercises:
         if db.session.query(Exercise).filter_by(name = exercise, workout_id = workout_id).scalar() is None:
             new_exercise = Exercise(name = exercise, workout_id = workout_id)
@@ -73,10 +88,12 @@ def workout(id):
 
     db.session.commit()
 
+    # Retrieves all the exercises for that workout
     exercises = db.session.query(Exercise).filter_by(workout_id = workout_id).all()
 
     return render_template("workout.html", workout_day = workout_day, exercises = exercises, user = user, workoutId = workout_id)
 
+#Defines the route Delete a workout
 @routes.route("/delete_w/<int:id>")
 @login_required
 #id is Workout ID
@@ -105,7 +122,7 @@ def deleteWorkout(id):
 
     return redirect(url_for("routes.archive"))
 
-
+# Defines route to add sets and weight to the exercise
 @routes.route("/addsets", methods=["POST"])
 @login_required
 def addSets():
@@ -150,12 +167,14 @@ def addSets():
 
     return redirect(url_for("routes.workout", id = workout_id))
 
+# Defines route to delete exercise in a particular routine
 @routes.route("/delete_e/<string:day>/<string:exercise>")
 @login_required
-#id is Exercise ID
 def deleteExercise(day, exercise):
+    # Retreives the exercise to delete
     exercise_to_delete = db.session.query(Routine).filter_by(day = day, exercise = exercise, user_id = current_user.id).first()
 
+    # If exercise exists, then deletes
     if exercise_to_delete:
         db.session.delete(exercise_to_delete)
         db.session.commit()
@@ -165,47 +184,59 @@ def deleteExercise(day, exercise):
 
     return redirect(url_for("routes.routine"))
 
+# Defines routine route
 @routes.route("/routine", methods=["POST", "GET"])
 @login_required
 def routine():
 
+    # In order to add more days and exercies, a POST request is made
     if request.method == "POST":
+        # Retrieves days and the exercise, formats appropriately
         day = request.form.get("day")
         day = day.capitalize()
         exercise = request.form.get("exercise")
         exercise = exercise.title()
 
+        # If no exercise is entered
         if not exercise:
             flash("Please Enter Exercise!", category='error')
         
+        # If the same exercise for the same day is entered
         elif db.session.query(Routine).filter_by(day = day, exercise = exercise, user_id = current_user.id).first():
             flash("Exercise Already Exists For this Day!", category='error')
 
+        # Adds new exercise
         else:
             new_exercise = Routine(day = day, exercise = exercise, user_id = current_user.id)
             db.session.add(new_exercise)
             db.session.commit()
 
+    # Gets all the days the user worksout
     days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
     days = [day[0] for day in days]
 
+    # Gets all the exercises for the user
     exercises = db.session.query(Routine).filter_by(user_id = current_user.id).all()
 
     return render_template("routine.html", days = days, exercises = exercises)
 
+# Defines archive route
 @routes.route("/archive")
 @login_required
 def archive():
+    # Gets workouts and the total weeks the user has been exercising for
     workouts = db.session.query(Workout).filter_by(user_id = current_user.id).all()
     weeks = db.session.query(Workout.week).filter_by(user_id = current_user.id).distinct().all()
     weeks = [week[0] for week in weeks]
 
-    return render_template("archive.html", workouts = workouts, weeks = weeks)
+    return render_template("archive.html", workouts = workouts, weeks = weeks)  
 
+# Defines route to change to next week
 @routes.route("/incrementweek", methods=["POST", "GET"])
 @login_required
 def increment_week():
     if request.method == "POST":    
+        # Updates 'week' column in the User table 
         user = db.session.query(User).filter_by(id = current_user.id).first()
         new_week = int(user.week) + 1;
 
