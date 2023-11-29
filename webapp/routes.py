@@ -167,6 +167,35 @@ def addSets():
 
     return redirect(url_for("routes.workout", id = workout_id))
 
+# Defines route to delete sets
+@routes.route("/deletesets", methods=["GET", "POST"])
+@login_required
+def deleteSets():
+    # Gets Exercise ID
+    e_id = request.form.get("e_id")
+
+    if request.method == "POST":
+
+        # Retreives the exercise from the table to be updated
+        exercise_to_update = db.session.query(Exercise).filter_by(id = e_id).first()
+
+        # Checks if exercise exists
+        if exercise_to_update:
+            exercise_to_update.sets = None
+            exercise_to_update.weight = None
+            db.session.commit()
+            
+            flash("Sets Successfully Deleted", category="success")
+
+        else:
+            flash("Error deleting exercise", category="error")
+
+    # Redirects to workout page by getting id first
+    workout_id = db.session.query(Exercise.workout_id).filter_by(id = e_id).first()
+    workout_id = workout_id[0]
+
+    return redirect(url_for("routes.workout", id = workout_id))
+
 # Defines route to delete exercise in a particular routine
 @routes.route("/delete_e/<string:day>/<string:exercise>")
 @login_required
