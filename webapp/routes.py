@@ -285,18 +285,23 @@ def compare():
         week_a = request.form.get("week_a")
         week_b = request.form.get("week_b")
         exercise = request.form.get("exercise")
-        
-        week_a_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_a).first()
+        day = request.form.get("day") 
+
+        week_a_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_a, day = day).first()
         week_a_id = week_a_id.id
-        week_b_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_b).first()
+        week_b_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_b, day = day).first()
         week_b_id = week_b_id.id
 
-        
+        exercise_a = db.session.query(Exercise).filter_by(workout_id = week_a_id, name = exercise).first()
+        exercise_b = db.session.query(Exercise).filter_by(workout_id = week_b_id, name = exercise).first()
 
-        week_a_exercise = db.session.query()
+        a_sets = exercise_a.sets
+        b_sets = exercise_b.sets
+
+        return render_template("compare.html", days = days, a_sets = a_sets, b_sets = b_sets)
 
 
-    return render_template("compare.html", days = days)
+    return render_template("compare.html", days = days, a_sets = 0, b_sets = 0)
 
 #Defines Error Route
 @routes.route("/error")

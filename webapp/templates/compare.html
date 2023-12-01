@@ -21,7 +21,11 @@ Compare
         <button class="btn btn-dark" type="submit">Compare Exercise</button>
     </form>
 </div>
-    
+
+{% if a_sets %}
+<h1>First Week: {{ a_sets }}</h1>
+<h1>Second Week: {{ b_sets }}</h1>
+{% endif %}
 
 
 {% endblock %}
