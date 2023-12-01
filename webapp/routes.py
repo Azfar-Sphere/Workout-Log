@@ -274,6 +274,30 @@ def increment_week():
 
     return redirect(url_for("routes.index"))
 
+# Defines Compare route
+@routes.route("/compare", methods=["POST", "GET"])
+@login_required
+def compare():
+    days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
+    days = [day[0] for day in days]
+
+    if request.method == "POST":
+        week_a = request.form.get("week_a")
+        week_b = request.form.get("week_b")
+        exercise = request.form.get("exercise")
+        
+        week_a_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_a).first()
+        week_a_id = week_a_id.id
+        week_b_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_b).first()
+        week_b_id = week_b_id.id
+
+        
+
+        week_a_exercise = db.session.query()
+
+
+    return render_template("compare.html", days = days)
+
 #Defines Error Route
 @routes.route("/error")
 def error():

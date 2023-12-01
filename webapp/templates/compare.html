@@ -1,0 +1,27 @@
+{% extends "layout.html" %} 
+
+{% block title %} 
+
+Compare
+
+{% endblock %} 
+
+{% block main %}
+
+<div class="text-center d-flex justify-content-center">
+    <form action="/compare" method="post">
+        <input name="week_a" id="week_a" placeholder="First Week">
+        <input name="week_b" id="week_b" placeholder="Second Week">
+        <select class="form-select" id="day" name="day">
+            {% for day in days %}
+            <option value="{{ day }}">{{ day }}</option>
+            {% endfor %}
+        </select>
+        <input name="exercise" id="exercise" placeholder="Exercise">
+        <button class="btn btn-dark" type="submit">Compare Exercise</button>
+    </form>
+</div>
+    
+
+
+{% endblock %}
