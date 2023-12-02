@@ -295,13 +295,10 @@ def compare():
         exercise_a = db.session.query(Exercise).filter_by(workout_id = week_a_id, name = exercise).first()
         exercise_b = db.session.query(Exercise).filter_by(workout_id = week_b_id, name = exercise).first()
 
-        a_sets = exercise_a.sets
-        b_sets = exercise_b.sets
-
-        return render_template("compare.html", days = days, a_sets = a_sets, b_sets = b_sets)
+        return render_template("compare.html", days = days, exercise_a = exercise_a ,exercise_b = exercise_b, week_a = week_a, week_b = week_b)
 
 
-    return render_template("compare.html", days = days, a_sets = 0, b_sets = 0)
+    return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
 
 #Defines Error Route
 @routes.route("/error")

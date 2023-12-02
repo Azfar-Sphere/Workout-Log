@@ -22,9 +22,24 @@ Compare
     </form>
 </div>
 
-{% if a_sets %}
-<h1>First Week: {{ a_sets }}</h1>
-<h1>Second Week: {{ b_sets }}</h1>
+{% if exercise_a %}
+<table class="table text-sm-center">
+    <tr>    
+        <th scope="col">Week</th>
+        <th scope="col">Sets</th>
+        <th scopr="col">Weight</th>
+    </tr>
+        <tr>
+        <td>{{ week_a }}</td>
+        <td>{{ exercise_a.sets }}</td>
+        <td>{{ exercise_a.weight }}</td>
+    </tr>
+    <tr>
+        <td>{{ week_b }}</td>
+        <td>{{ exercise_b.sets }}</td>
+        <td>{{ exercise_b.weight }}</td>
+    </tr>
+</table>
 {% endif %}
 
 
