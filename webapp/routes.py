@@ -285,7 +285,13 @@ def compare():
         week_a = request.form.get("week_a")
         week_b = request.form.get("week_b")
         exercise = request.form.get("exercise")
+        exercise = exercise.title()
         day = request.form.get("day") 
+
+        if not week_a or not week_b or not exercise or not day:
+            flash("Please Enter All The Fields", category = 'error')
+            return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
+
 
         week_a_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_a, day = day).first()
         week_a_id = week_a_id.id
