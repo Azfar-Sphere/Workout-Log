@@ -7,24 +7,36 @@ Compare
 {% endblock %} 
 
 {% block main %}
-
-<div class="text-center d-flex justify-content-center">
+<br>
+<div class="container-fluid">
+<div class="text-center d-flex justify-content-center form-group">
     <form action="/compare" method="post">
-        <input name="week_a" id="week_a" placeholder="First Week">
-        <input name="week_b" id="week_b" placeholder="Second Week">
-        <select class="form-select" id="day" name="day">
-            <option disabled selected>Select a day</option>
-            {% for day in days %}
-            <option value="{{ day }}">{{ day }}</option>
-            {% endfor %}
-        </select>
-        <select name="exercise" id="exercise" placeholder="Exercise">
-
-        </select>
-        <button class="btn btn-dark" type="submit">Compare Exercise</button>
-    </form>
+            <div class="row">
+                    <div class="col">
+                        <input class="form-control" name="week_a" id="week_a" placeholder="First Week">
+                    </div>
+                    <div class="col">
+                        <input class="form-control" name="week_b" id="week_b" placeholder="Second Week">
+                    </div>
+            </div>
+                    <small class="form-text text-muted">Enter the weeks you want to compare</small>
+                    <div class="form-control">
+                        <select class="form-select" id="day" name="day">
+                            <option disabled selected>Select a day</option>
+                            {% for day in days %}
+                            <option value="{{ day }}">{{ day }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="form-select" name="exercise" id="exercise" placeholder="Exercise">
+                                <option disabled selected>Exercise</option>
+                        </select>
+                        <small class="form-text text-muted">Exercises will appear after you select a day</small>
+                    </div>
+                    <br>
+            <button class="btn btn-dark" type="submit">Compare Exercise</button>
+    </form> 
 </div>
-
+</div>
 {% if exercise_a %}
 <h1>{{ exercise_a.name }}</h1>
 <table class="table text-sm-center">

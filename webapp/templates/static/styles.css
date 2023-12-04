@@ -12,3 +12,12 @@ table {
 th {
     font-weight: bold;
 }
+
+
+.form-control {
+    border: 1px solid #000000; 
+}
+
+.form-control:not(textarea) {
+    padding: .375rem .75rem;
+}
