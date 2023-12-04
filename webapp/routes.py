@@ -306,6 +306,13 @@ def compare():
 
     return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
 
+@routes.route("/exercise.html")
+@login_required
+def exercise():
+    exercises = db.session.query(Routine).filter_by(user_id = current_user.id).all()
+    return render_template("exercise.html", exercises = exercises)
+
+
 #Defines Error Route
 @routes.route("/error")
 def error():

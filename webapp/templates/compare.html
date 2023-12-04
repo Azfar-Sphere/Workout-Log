@@ -13,6 +13,7 @@ Compare
         <input name="week_a" id="week_a" placeholder="First Week">
         <input name="week_b" id="week_b" placeholder="Second Week">
         <select class="form-select" id="day" name="day">
+            <option disabled selected>Select a day</option>
             {% for day in days %}
             <option value="{{ day }}">{{ day }}</option>
             {% endfor %}
@@ -45,12 +46,11 @@ Compare
 </table>
 {% endif %}
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+let daySelect = document.getElementById("day");
 
-const exerciseSelect = document.getElementById("exercise");
-
-exerciseSelect.addEventListener("change", () => {
+daySelect.addEventListener("change", () => {
+console.log("Change detected");
 
     const xhr = new XMLHttpRequest();
 
@@ -59,17 +59,21 @@ exerciseSelect.addEventListener("change", () => {
         if (xhr.readyState == 4) {
 
             if (xhr.status == 200) {
+                let exerciseSelect = document.getElementById("exercise");
                 exerciseSelect.innerHTML = xhr.responseText;
+                console.log("XML Success")
+            }
+
+            else {
+                console.log("Error Making XML Request");
             }
         }
-}
-    xhr.open('get', exercise.html,true );
-    xhr.send()
+    };
 
-})
+    xhr.open('get', 'exercise.html', true);
+    xhr.send();
 
-
-
+});
 </script>
 
 {% endblock %}
