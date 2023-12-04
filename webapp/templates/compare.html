@@ -90,9 +90,9 @@ console.log("Change detected");
 
 });
 
-let weekField = document.getElementById("week_a");
+let weekFieldA = document.getElementById("week_a");
 
-weekField.addEventListener("dblclick", () => {
+weekFieldA.addEventListener("dblclick", () => {
 console.log("Week Button Clicked")
 
     const xhr = new XMLHttpRequest();
@@ -102,7 +102,7 @@ console.log("Week Button Clicked")
         if (xhr.readyState == 4) {
 
             if (xhr.status == 200) {
-                weekField.value = xhr.responseText;
+                weekFieldA.value = xhr.responseText;
                 console.log("XML Success")
             }
 
@@ -112,7 +112,33 @@ console.log("Week Button Clicked")
         }
     };
 
-    xhr.open('get', `/getweek`, true);
+    xhr.open('get', `/getweekA`, true);
+    xhr.send();
+});
+
+let weekFieldB = document.getElementById("week_b");
+
+weekFieldB.addEventListener("dblclick", () => {
+console.log("Week Button Clicked")
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {  
+
+        if (xhr.readyState == 4) {
+
+            if (xhr.status == 200) {
+                weekFieldB.value = xhr.responseText;
+                console.log("XML Success")
+            }
+
+            else {
+                console.log("Error Making XML Request");
+            }
+        }
+    };
+
+    xhr.open('get', `/getweekB`, true);
     xhr.send();
 
 });

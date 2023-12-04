@@ -312,12 +312,20 @@ def exercise(day):
     exercises = db.session.query(Routine).filter_by(user_id = current_user.id, day = day).all()
     return render_template("exercise.html", exercises = exercises)
 
-@routes.route("/getweek")
+@routes.route("/getweekA")
 @login_required
-def getWeek():
+def getWeekA():
     user = db.session.query(User).filter_by(id = current_user.id).first();
     week = user.week
     return week
+
+@routes.route("/getweekB")
+@login_required
+def getWeekB():
+    user = db.session.query(User).filter_by(id = current_user.id).first();
+    week = int(user.week)
+    week -= 1
+    return str(week)
 
 #Defines Error Route
 @routes.route("/error")
