@@ -312,6 +312,12 @@ def exercise(day):
     exercises = db.session.query(Routine).filter_by(user_id = current_user.id, day = day).all()
     return render_template("exercise.html", exercises = exercises)
 
+@routes.route("/getweek")
+@login_required
+def getWeek():
+    user = db.session.query(User).filter_by(id = current_user.id).first();
+    week = user.week
+    return week
 
 #Defines Error Route
 @routes.route("/error")

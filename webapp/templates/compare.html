@@ -37,6 +37,7 @@ Compare
     </form> 
 </div>
 </div>
+<br>
 {% if exercise_a %}
 <h1>{{ exercise_a.name }}</h1>
 <table class="table text-sm-center">
@@ -85,6 +86,33 @@ console.log("Change detected");
     };
 
     xhr.open('get', `exercise.html/${day}`, true);
+    xhr.send();
+
+});
+
+let weekField = document.getElementById("week_a");
+
+weekField.addEventListener("dblclick", () => {
+console.log("Week Button Clicked")
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {  
+
+        if (xhr.readyState == 4) {
+
+            if (xhr.status == 200) {
+                weekField.value = xhr.responseText;
+                console.log("XML Success")
+            }
+
+            else {
+                console.log("Error Making XML Request");
+            }
+        }
+    };
+
+    xhr.open('get', `/getweek`, true);
     xhr.send();
 
 });
