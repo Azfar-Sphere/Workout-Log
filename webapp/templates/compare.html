@@ -17,7 +17,9 @@ Compare
             <option value="{{ day }}">{{ day }}</option>
             {% endfor %}
         </select>
-        <input name="exercise" id="exercise" placeholder="Exercise">
+        <select name="exercise" id="exercise" placeholder="Exercise">
+
+        </select>
         <button class="btn btn-dark" type="submit">Compare Exercise</button>
     </form>
 </div>
@@ -43,5 +45,31 @@ Compare
 </table>
 {% endif %}
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+
+const exerciseSelect = document.getElementById("exercise");
+
+exerciseSelect.addEventListener("change", () => {
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {  
+
+        if (xhr.readyState == 4) {
+
+            if (xhr.status == 200) {
+                exerciseSelect.innerHTML = xhr.responseText;
+            }
+        }
+}
+    xhr.open('get', exercise.html,true );
+    xhr.send()
+
+})
+
+
+
+</script>
 
 {% endblock %}

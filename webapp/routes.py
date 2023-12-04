@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, url_for, redirect, flash
+from flask import render_template, Blueprint, request, url_for, redirect, flash, jsonify
 from flask_login import login_required, current_user
 from .tables import User, Workout, Exercise, Routine, days_order
 from . import db
