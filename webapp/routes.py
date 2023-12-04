@@ -306,10 +306,10 @@ def compare():
 
     return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
 
-@routes.route("/exercise.html")
+@routes.route("/exercise.html/<string:day>")
 @login_required
-def exercise():
-    exercises = db.session.query(Routine).filter_by(user_id = current_user.id).all()
+def exercise(day):
+    exercises = db.session.query(Routine).filter_by(user_id = current_user.id, day = day).all()
     return render_template("exercise.html", exercises = exercises)
 
 

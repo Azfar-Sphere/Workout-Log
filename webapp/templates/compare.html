@@ -53,6 +53,8 @@ daySelect.addEventListener("change", () => {
 console.log("Change detected");
 
     const xhr = new XMLHttpRequest();
+    let day = daySelect.value
+
 
     xhr.onreadystatechange = function () {  
 
@@ -70,7 +72,7 @@ console.log("Change detected");
         }
     };
 
-    xhr.open('get', 'exercise.html', true);
+    xhr.open('get', `exercise.html/${day}`, true);
     xhr.send();
 
 });
