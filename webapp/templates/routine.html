@@ -35,8 +35,11 @@ x
             <tr>
                 <th scope="col">{{ day }}</th>
                 {% for exercise in exercises %}
-                    {% if exercise.day == day %}
-                        <th scope="col"><a href="delete_e/{{ day }}/{{ exercise.exercise }}">{{ exercise.exercise }}</a></th>
+                {% if exercise.day == day %}
+                <th scope="col">
+                    <a type="button" class="close" href="delete_e/{{ day }}/{{ exercise.exercise }}"><span aria-hidden="true">&times;</span></a>
+                    {{ exercise.exercise }} 
+                </th>
                     {% endif %}
                 {% endfor %}
             </tr>

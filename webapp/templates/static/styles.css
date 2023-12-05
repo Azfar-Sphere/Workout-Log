@@ -21,3 +21,12 @@ th {
 .form-control:not(textarea) {
     padding: .375rem .75rem;
 }
+
+a {
+    color: #000000; 
+    text-decoration: none; 
+}
+
+a:hover {
+    text-decoration: underline; 
+}
