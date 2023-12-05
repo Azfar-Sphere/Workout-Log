@@ -30,3 +30,7 @@ a {
 a:hover {
     text-decoration: underline; 
 }
+
+.form-floating label {
+    font-size: 80%;
+}
