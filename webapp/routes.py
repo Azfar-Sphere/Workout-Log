@@ -271,6 +271,7 @@ def increment_week():
 
         user.week = new_week
         db.session.commit()
+        flash("Week Incremented Succesfully", category='success')
 
     return redirect(url_for("routes.index"))
 
