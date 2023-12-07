@@ -37,17 +37,29 @@ x
                 {% for exercise in exercises %}
                 {% if exercise.day == day %}
                 <th scope="col">
-                    <a type="button" class="close" href="delete_e/{{ day }}/{{ exercise.exercise }}"><span aria-hidden="true">&times;</span></a>
-                    {{ exercise.exercise }} 
+                    <a type="button" class="close" href="#" onclick="return confirmDelete('{{ day }}', '{{ exercise.exercise }}')"><span aria-hidden="true">&times;</span></a>
+                    {{ exercise.exercise }}
                 </th>
-                    {% endif %}
+                    {% endif %} 
                 {% endfor %}
             </tr>
             </thead>
         </table>
     </div>
 </table>
+<script>
+function confirmDelete(day, exercise) {
+    var confirmation = confirm("Are you sure you want to delete this exercise?");
 
+    if (confirmation) {
+        window.location.href = "/delete_e/" + day + "/" + exercise;
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+</script>
 {% endfor %}
 
 {% endblock %}

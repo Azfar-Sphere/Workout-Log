@@ -207,6 +207,7 @@ def deleteExercise(day, exercise):
     if exercise_to_delete:
         db.session.delete(exercise_to_delete)
         db.session.commit()
+        flash("Exercise Deleted Succesfully", category="success")
 
     else:
         flash("Error Deleting Exercise", category='error')
