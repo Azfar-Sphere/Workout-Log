@@ -9,12 +9,12 @@ Workout For {{ workout.day }}
 
 {% block main%}
 <br />
-<h1 id="Workout">{{ workout.day }} Workout</h1>
-<h3 style="text-align: center;">{{ workout.date }}</h3>
+<h1 class="display-4 text-center fw-bold">{{ workout.day }} Workout</h1>
+<h3 class="text-center fs-5">{{ workout.date }}</h3>
 
 <div class="fs-6">
   <div class="container-fluid text-sm-center">
-    <table class="table">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th scope="col">Exercise</th>
@@ -24,39 +24,24 @@ Workout For {{ workout.day }}
         </tr>
       </thead>
       {% for exercise in exercises %}
-      <tr>
-        <td>{{ exercise.name }}</td>
-        <td>{{ exercise.sets }}</td>
-        <td>{{ exercise.weight }}</td>
-        <td>
+      <tr class="align-middle">
+        <td class="text-center">{{ exercise.name }}</td>
+        <td class="text-center">{{ exercise.sets }}</td>
+        <td class="text-center">{{ exercise.weight }}</td>
+        <td class="text-center">
           <form class="form" action="/addsets" method="post">
             <input type="hidden" name="user" value="{{ user }}" />
             <input type="hidden" name="workoutId" value="{{ workoutId }}" />
             <input type="hidden" name="e_name" value="{{ exercise.name }}" />
-            <input
-              class="form-control mx-auto w-auto"
-              id="sets"
-              name="sets"
-              type="text"
-              placeholder="Reps Per Set"
-            />
-            <input
-              class="form-control mx-auto w-auto"
-              id="weight "
-              name="weight"
-              type="text"
-              placeholder="Weight Per Set"
-            />
-            <br />
-            <button class="btn btn-primary mx-auto" id="set-submit" type="submit">
-              Add Sets
-            </button>
+            <input class="form-control form-control-sm mx-auto w-auto" id="sets" name="sets" type="text" placeholder="Reps Per Set" />
+            <input class="form-control form-control-sm mx-auto w-auto" id="weight" name="weight" type="text" placeholder="Weight Per Set" />
+            <button class="btn btn-primary mx-auto mt-2" id="set-submit" type="submit">Add Sets</button>
           </form>
         </td>
-        <td>
-          <form class="form" action="/deletesets" method="post" onsubmit="return confirmDeleteSets()">
+        <td class="text-center">
+          <form class="form mt-2" action="/deletesets" method="post" onsubmit="return confirmDeleteSets()">
             <input type="hidden" name="e_id" value="{{ exercise.id }}" />
-            <button class="btn btn-danger mx-auto" id="set-delete" type="submit">Delete Set</button>
+            <button class="btn btn-danger mx-auto" id="set-delete" type="submit">Delete Sets</button>
           </form>
         </td>
       </tr>

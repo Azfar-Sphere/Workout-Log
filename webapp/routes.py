@@ -142,6 +142,11 @@ def addSets():
         if not weight:
             weight = "Bodyweight"
         
+        if not sets:
+            flash("Please Enter The Reps", category="error")
+            return redirect(url_for("routes.workout", id = workout_id))
+
+        
         #Checks if exercise already exists previously in the workout, concatonates new sets and weight if it does
         if db.session.query(Exercise.sets).filter_by(workout_id = workout_id, name = exercise).scalar() is not None:
             db.session.execute(
