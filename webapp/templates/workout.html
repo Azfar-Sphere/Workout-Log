@@ -54,7 +54,7 @@ Workout For {{ workout.day }}
           </form>
         </td>
         <td>
-          <form class="form" action="/deletesets" method="post">
+          <form class="form" action="/deletesets" method="post" onsubmit="return confirmDeleteSets()">
             <input type="hidden" name="e_id" value="{{ exercise.id }}" />
             <button class="btn btn-danger mx-auto" id="set-delete" type="submit">Delete Set</button>
           </form>
@@ -67,12 +67,12 @@ Workout For {{ workout.day }}
 
 <script>
   // Changes the Heading of Each Workout
-  var workoutNumber = {{ workoutNumber }};
-  const changeHeading = (workoutNumber) =>
-  {
-      heading = document.getElementById("Workout");
-      heading.innerText = "Workout" + " " + workoutNumber;
-  }
-  changeHeading(workoutNumber);
+var workoutNumber = {{ workoutNumber }};
+const changeHeading = (workoutNumber) => {
+    heading = document.getElementById("Workout");
+    heading.innerText = "Workout" + " " + workoutNumber;
+};
+changeHeading(workoutNumber);
+
 </script>
 {% endblock %}
