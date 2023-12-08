@@ -74,10 +74,10 @@ def workout(id):
         return redirect(url_for("routes.error"))
 
     # Gets the workout day
-    workout_day = db.session.query(Workout.day).filter_by(id = workout_id).scalar()
+    workout = db.session.query(Workout).filter_by(id = workout_id).scalar()
 
     # Retrieves exercises for that day
-    exercises = db.session.query(Routine.exercise).filter_by(day = workout_day, user_id = current_user.id).all()
+    exercises = db.session.query(Routine.exercise).filter_by(day = workout.day, user_id = current_user.id).all()
     exercises = [exercise[0] for exercise in exercises]
 
     # Assigns exercise to the workout if they aren't previously assigned
@@ -91,7 +91,7 @@ def workout(id):
     # Retrieves all the exercises for that workout
     exercises = db.session.query(Exercise).filter_by(workout_id = workout_id).all()
 
-    return render_template("workout.html", workout_day = workout_day, exercises = exercises, user = user, workoutId = workout_id)
+    return render_template("workout.html", workout = workout, exercises = exercises, user = user, workoutId = workout_id)
 
 #Defines the route Delete a workout
 @routes.route("/delete_w/<int:id>")
