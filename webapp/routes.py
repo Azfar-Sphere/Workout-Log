@@ -296,9 +296,15 @@ def compare():
 
 
         week_a_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_a, day = day).first()
-        week_a_id = week_a_id.id
         week_b_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_b, day = day).first()
+
+        if not week_a_id or not week_b_id:
+            flash("Error Getting The Week", category = 'error')
+            return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
+        
+        week_a_id = week_a_id.id
         week_b_id = week_b_id.id
+
 
         exercise_a = db.session.query(Exercise).filter_by(workout_id = week_a_id, name = exercise).first()
         exercise_b = db.session.query(Exercise).filter_by(workout_id = week_b_id, name = exercise).first()
