@@ -5,27 +5,32 @@ Index
 {% endblock %}
 
 {% block main %}
-<div class="containter-fluid fs-6">
-    <table class="table text-sm-center">
-        <thead>
-            <tr>
-                <th scope="col">Workout</th>
-                <th scope="col">Date</th>
-                <th scope="col">Workout Details</th>
-            </tr>
+<br>
+<div class="container-fluid fs-6">
+    <table class="table table-bordered table-hover text-center">
+        <thead class="table-success">
+        <tr>
+            <th scope="col">Workout</th>
+            <th scope="col">Actions</th>
+        </tr>
         </thead>
+        <tbody>
         {% for day in days %}
         <tr>
-            <td scope="col">{{ day }}</td>
+            <td>{{ day }}</td>
+            <td>
             <form action="/dayworkout" method="post">
-                <td><button class="btn btn-primary" type="submit">Workout for {{ day }}</button></td>
                 <input type="hidden" name="day" value="{{ day }}" />
-                <input type="hidden" id="week" name="week" value="{{ week }}"/>
+                <input type="hidden" id="week" name="week" value="{{ week }}" />
+                <button class="btn btn-primary" type="submit">Workout for {{ day }}</button>
             </form>
+            </td>
         </tr>
         {% endfor %}
+        </tbody>
     </table>
 </div>
+
 <div class="container-fluid fs-6 text-sm-center">
     <form action="/incrementweek" method="post" onsubmit="return confirmWeek()">
         <p class="font-monospace fs-1" id="weekLabel">Week {{ week }}</p>
