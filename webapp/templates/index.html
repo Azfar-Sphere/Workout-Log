@@ -7,6 +7,7 @@ Index
 {% block main %}
 <br>
 <h1>Hi {{ user }}!</h1>
+{% if days %}
 <br>
 <div class="container-fluid fs-6">
     <table class="table table-bordered table-hover text-center">
@@ -39,4 +40,9 @@ Index
         <button id="weekButton" class="btn btn-warning" type="submit">Next Week</button>
     </form>
 </div>
+
+{% else %}
+<h1>Please add a <a href="/routine" style="text-decoration: underline; color: goldenrod;">Routine</a> First</h1>
+{% endif %}
+
 {% endblock %}
