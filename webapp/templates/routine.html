@@ -6,48 +6,51 @@
 
 <div class="hstack gap-3 d-flex justify-content-center">
     <form method="post" action="/routine">
-        <br>
-        <div class="form-floating">
-        <select class="form-select" id="day" name="day">
-            <option value="saturday">Saturday</option>
-            <option value="sunday">Sunday</option>
-            <option value="monday">Monday</option>
-            <option value="tuesday">Tuesday</option>
-            <option value="wednesday">Wednesday</option>
-            <option value="thursday">Thursday</option>
-            <option value="friday">Friday</option>
-        </select>
-        <label for="day">Select a day</label>
+        <div class="mb-3 form-floating">
+            <select class="form-select" id="day" name="day">
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+            </select>
+            <label for="day" class="form-label">Select a day</label>
         </div>
+
         <div class="input-group mb-3">
             <input type="text" autocomplete="off" class="form-control" name="exercise" id="exercise" placeholder="Enter Exercise to Add">
-            <button class="btn btn-primary mx-auto" id="set-submit" type="submit">Add Exercise</button>
+            <button class="btn btn-primary" id="set-submit" type="submit">Add Exercise</button>
         </div>
     </form>
 </div>
 
-
 {% for day in days %}
 
-<table>
-    <div class="container-fluid text-sm-center">
-        <table class="table">
-            <thead>
+<div class="container text-center">
+    <table class="table">
+        <thead>
             <tr>
                 <th scope="col">{{ day }}</th>
                 {% for exercise in exercises %}
-                {% if exercise.day == day %}
-                <th scope="col">
-                    <a type="button" class="close" href="#" onclick="return confirmDeleteExercise('{{ day }}', '{{ exercise.exercise }}')"><span aria-hidden="true">&times;</span></a>
-                    {{ exercise.exercise }}
-                </th>
+                    {% if exercise.day == day %}
+                        <td class="exercise-cell">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <span>{{ exercise.exercise }}</span>
+                                    <a href="#" class="close" onclick="return confirmDeleteExercise('{{ day }}', '{{ exercise.exercise }}')">
+                                        <span aria-hidden="true" >&times;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
                     {% endif %} 
                 {% endfor %}
             </tr>
-            </thead>
-        </table>
-    </div>
-</table>
+        </thead>
+    </table>
+</div>
 {% endfor %}
 
 {% endblock %}

@@ -27,7 +27,10 @@ def index():
     week = db.session.query(User.week).filter_by(id = current_user.id).first()
     week = week[0]
 
-    return render_template("index.html", days = days, workouts = workouts, week=week)
+    user = db.session.query(User).filter_by(id = current_user.id).first();
+    user = user.username
+
+    return render_template("index.html", days = days, workouts = workouts, week=week, user=user)
 
 # Defines the route when a new workout for a day is created
 @routes.route("/dayworkout", methods=["POST", "GET"])
@@ -339,6 +342,17 @@ def getWeekB():
     week = int(user.week)
     week -= 1
     return str(week)
+
+@routes.route("/updateDate/<int:id>", methods=["POST", "GET"])
+@login_required
+def updateDate(id):
+    if request.method == "POST":
+        new_date = request.form.get("date");
+        old_date = db.session.query(Workout).filter_by(user_id = current_user.id, id = id).first()
+        old_date = new_date
+        db.session.commit()
+
+
 
 #Defines Error Route
 @routes.route("/error")
