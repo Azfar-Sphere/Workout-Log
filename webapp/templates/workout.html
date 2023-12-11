@@ -11,7 +11,7 @@ Workout For {{ workout.day }}
 <br />
 <div style="text-align: center;">
 <h1 class="display-4 text-center fw-bold">{{ workout.day }} Workout</h1>
-<input name="date" id="date" type="date" value="{{ workout.date }}">
+<input name="date" id="date" type="date" value="{{ workout.date }}" onchange="updateDate({{ workout.id }})">
 </div>
 <br>
 
@@ -55,18 +55,17 @@ Workout For {{ workout.day }}
 
 <script>
   // Changes the Heading of Each Workout
-var workoutNumber = {{ workoutNumber }};
-const changeHeading = (workoutNumber) => {
-    heading = document.getElementById("Workout");
-    heading.innerText = "Workout" + " " + workoutNumber;
-};
-changeHeading(workoutNumber);
+// var workoutNumber = {{ workoutNumber }};
+// const changeHeading = (workoutNumber) => {
+//     heading = document.getElementById("Workout");
+//     heading.innerText = "Workout" + " " + workoutNumber;
+// };
+// changeHeading(workoutNumber);
 
-function updateDate() {
-   
-  var newDate = document.getElementById("date.value");
-  
-  console.log("Date Changed")
+function updateDate(id) {
+
+  var newDate = document.getElementById("date").value;
+  console.log("Date Changed Intiated")
 
     const xhr = new XMLHttpRequest();
 
@@ -85,8 +84,9 @@ function updateDate() {
         }
     };
 
-    xhr.open('post', `/updateDate/${workout.id}`, true);
+
+    xhr.open('get', `/updateDate/${id}/?date=${newDate}`, true);
     xhr.send();
-}
+};
 </script>
 {% endblock %}

@@ -343,14 +343,17 @@ def getWeekB():
     week -= 1
     return str(week)
 
-@routes.route("/updateDate/<int:id>", methods=["POST", "GET"])
+@routes.route("/updateDate/<int:id>/")
 @login_required
 def updateDate(id):
-    if request.method == "POST":
-        new_date = request.form.get("date");
-        old_date = db.session.query(Workout).filter_by(user_id = current_user.id, id = id).first()
-        old_date = new_date
+    new_date = request.args.get("date") 
+
+    workout = db.session.query(Workout).filter_by(user_id = current_user.id, id = id).first()
+    if workout:
+        workout.date = new_date
         db.session.commit()
+    
+    return jsonify({"new_date": new_date})
 
 
 
