@@ -32,7 +32,7 @@ Workout For {{ workout.day }}
         <td class="text-center">{{ exercise.sets }}</td>
         <td class="text-center">{{ exercise.weight }}</td>
         <td class="text-center">
-          <form class="form" action="/addsets" method="post">
+          <form class="form" action="/addsets" method="post" autocomplete="off">
             <input type="hidden" name="user" value="{{ user }}" />
             <input type="hidden" name="workoutId" value="{{ workoutId }}" />
             <input type="hidden" name="e_name" value="{{ exercise.name }}" />
