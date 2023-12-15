@@ -322,12 +322,14 @@ def compare():
 
     return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
 
+# Return html page with exercises for XML
 @routes.route("/exercise.html/<string:day>")
 @login_required
 def exercise(day):
     exercises = db.session.query(Routine).filter_by(user_id = current_user.id, day = day).all()
     return render_template("exercise.html", exercises = exercises)
 
+# Returns current week for XML
 @routes.route("/getweekA")
 @login_required
 def getWeekA():
@@ -335,6 +337,7 @@ def getWeekA():
     week = user.week
     return week
 
+# Returns previous week for XML
 @routes.route("/getweekB")
 @login_required
 def getWeekB():
@@ -343,6 +346,7 @@ def getWeekB():
     week -= 1
     return str(week)
 
+# Returns new date for date field for XML
 @routes.route("/updateDate/<int:id>/")
 @login_required
 def updateDate(id):
