@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, url_for, redirect, flash, jsonify
+from flask import render_template, Blueprint, request, url_for, redirect, flash, jsonify, send_from_directory
 from flask_login import login_required, current_user
 from .tables import User, Workout, Exercise, Routine, days_order
 from . import db
@@ -359,6 +359,9 @@ def updateDate(id):
     
     return jsonify({"new_date": new_date})
 
+@routes.route("/webapp/templates/static/<string:filename>")
+def static(filename):
+    return url_for("static", filename=filename)
 
 
 #Defines Error Route
