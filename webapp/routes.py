@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .tables import User, Workout, Exercise, Routine, days_order
 from . import db
 from sqlalchemy.sql import text, case
+import os
 
 routes = Blueprint("routes", __name__)
 
@@ -364,10 +365,11 @@ def updateDate(id):
     
     return jsonify({"new_date": new_date})
 
+# Defines route for static files
 @routes.route("/webapp/templates/static/<string:filename>")
-def static(filename):
-    return url_for("static", filename=filename)
-
+def staticFiles(filename):
+    static_path = os.path.join(os.getcwd(), "webapp/templates/static")
+    return send_from_directory(static_path, filename)
 
 #Defines Error Route
 @routes.route("/error")

@@ -20,12 +20,19 @@ def register():
         # Checks valid username and password
         if not username or not password:
             flash("Please enter username and password", category='error')
-
+        
         elif user:
             flash("Username taken", category='error')
 
         elif password != conpassword:
             flash("Passwords dont match", category='error')
+        
+        elif len(username) <= 4:
+            flash("Please enter a username with 5 characters or more", category='error')
+
+        elif len(password) <= 4:
+            flash("Please enter a password with 5 characters or more", category='error')
+
 
         else:
             # Adds user detail to users database
