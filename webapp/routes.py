@@ -288,9 +288,11 @@ def increment_week():
 @routes.route("/compare", methods=["POST", "GET"])
 @login_required
 def compare():
+    # Gets all the days that the user has a workout for
     days = db.session.query(Routine.day).filter_by(user_id = current_user.id).distinct().order_by(days_order).all()
     days = [day[0] for day in days]
 
+    # Checks if the request method is POST, gets week_a, week_b, exercise and the day the user selected in the form
     if request.method == "POST":
         week_a = request.form.get("week_a")
         week_b = request.form.get("week_b")
@@ -298,22 +300,25 @@ def compare():
         exercise = exercise.title()
         day = request.form.get("day") 
 
+        # Checks if there were blank fields
         if not week_a or not week_b or not exercise or not day:
             flash("Please Enter All The Fields", category = 'error')
             return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
 
-
+        # Gets the workout information for that particular day
         week_a_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_a, day = day).first()
         week_b_id = db.session.query(Workout).filter_by(user_id = current_user.id, week = week_b, day = day).first()
 
+        # Checks if the workouts exist
         if not week_a_id or not week_b_id:
             flash("Error Getting The Week", category = 'error')
             return render_template("compare.html", days = days, exercise_a = 0, exercise_b = 0, week_a = 0, week_b = 0)
-        
+    
+        # Assigns the id column from the retrieved row
         week_a_id = week_a_id.id
         week_b_id = week_b_id.id
 
-
+        # Gets the exercise for that particular workout
         exercise_a = db.session.query(Exercise).filter_by(workout_id = week_a_id, name = exercise).first()
         exercise_b = db.session.query(Exercise).filter_by(workout_id = week_b_id, name = exercise).first()
 
