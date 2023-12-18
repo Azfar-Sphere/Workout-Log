@@ -15,11 +15,9 @@ def create_app():
     app.secret_key = "$2y$10$MQ72/iHjmp16XETNlq1E..BMlHrAGmMkHOxhu8MfO7.7toUb6fXdq"
 
     # Registers Blueprints
-    from .pwa_routes import pwa_bp
     from .auth import auth
     from .routes import routes
     
-    app.register_blueprint(pwa_bp)
     app.register_blueprint(auth)
     app.register_blueprint(routes)
 
