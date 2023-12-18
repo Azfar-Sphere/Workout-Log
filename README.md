@@ -12,3 +12,13 @@ Starting the project, in order to refine my knowledge furthermore, I watched man
 ### How to use and file structure:
 To run the program, run the main.py file and open the site. I did try to have the site hosted on heroku instead of relying locally hosting it, but it requried credit-details which I did not want to provide.
 You may find the file structing interesting, the main.py file resides outside of where all the other dependencies reside. Indeed, all the routes and templates are to be found in the "webapp" folder, this folder contains the __init__.py file, which means it is intialized as a package. I stumbled upon this way of structuring after watching a tutorial on Flask on Youtube, it makes it really easy to import different functions from other python files.
+#### Python Files:
+main.py - Run this file to run the webpage, imports from the webapp directory the create_app function.
+__init__.py - Defines the webapp directory as a package, also contains the create_app function which defines intializes the webapp, registers the blueprints, creates and intializes the database and the login manager.
+auth.py - Contains the routes for login, register and logout, handles user authentication.
+routes.py - Main routes file, handles all other routes for the webapp, handles insertion and deletion of rows in tables, most of the functionality of the webapp is based on the file.
+table.py - Defines all the tables for SQL 
+#### Templates:
+Stored in the templates directory, contains all HTML for all the pages. All HTML files inherit from layout.html which contains the navbar, basic information about the page and defines JS and CSS routes.
+#### Static:
+Contains the CSS and JS files, you may also note it contains the manifest file and the logo of the webapp. The manifest file is used to give the app functionality to be able to be downloaded, currently it serves no useful purpose.
