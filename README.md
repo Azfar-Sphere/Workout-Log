@@ -1,9 +1,5 @@
 # Workout-Log
-My CS50x Final Project. This is an application meant to ease recording my workouts and exercises.
-
-This is still a WIP,
-I've made a basic workout-logger, before adding more features I am trying to get workbox to work to enable PWA functionality. Having spent a week on this, it seems that using workbox with flask seems like a task way above my paygrade.
-
-Either way, I will finished developing my HTML webapp at least.
-
-To run this app, run main.py
+## Video Demo:  <URL HERE>
+## Description:
+### The Idea:
+As someone who goes to the gym and tracks his workouts, I found it tedious to manually log my workout details using my phone's notepad. Realizing the need for efficiency, for mt CS50 project, I embarked on creating an app that streamlines and refines the process of entering the number of reps and sets. This application is tailored to enhance the efficiency of tracking my workout days, ensuring a seamless and time-saving experience compared to the traditional note-taking method on my phone.
