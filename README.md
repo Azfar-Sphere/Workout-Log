@@ -22,3 +22,5 @@ table.py - Defines all the tables for SQL
 Stored in the templates directory, contains all HTML for all the pages. All HTML files inherit from layout.html which contains the navbar, basic information about the page and defines JS and CSS routes.
 #### Static:
 Contains the CSS and JS files, you may also note it contains the manifest file and the logo of the webapp. The manifest file is used to give the app functionality to be able to be downloaded, currently it serves no useful purpose. The JS files contains functions to confirm certain actions. However, some JS scripts all the XML scripts are written within the HTML file themselves.
+### Future plans:
+I want to make this a proper downladable app in the future that will work offline. I want to make it more beautiful with the design too. I also want to improve the compare page by showing how many reps were less or more than the other week. 
